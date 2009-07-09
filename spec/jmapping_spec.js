@@ -36,7 +36,7 @@ Screw.Unit(function(){
       // mock out Marker
       var marker_mock = mock();
       $('#map-side-bar .map-location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindow').exactly('once').with_arguments(this, {maxWidth: 425});
+        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
       });
       GMarker = mock_function(function(point, options){}, 'GMarker');
       GMarker.should_be_invoked().exactly('twice');
@@ -110,7 +110,7 @@ Screw.Unit(function(){
       // mock out Marker
       var marker_mock = mock();
       $('ul#map-item-list li.location .info-html').each(function(){
-        marker_mock.should_receive('bindInfoWindow').exactly('once').with_arguments(this, {maxWidth: 380});
+        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 380});
       });
       GMarker = mock_function(function(point, options){}, 'GMarker');
       GMarker.should_be_invoked().exactly('twice');
