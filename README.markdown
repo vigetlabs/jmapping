@@ -50,7 +50,7 @@ Make sure your HTML has a `div` element for the Google map, and there is a conta
 
 Then just call the `jMapping` function on the map element:
 
-  $('#map').jMapping();
+    $('#map').jMapping();
 
 
 Options
