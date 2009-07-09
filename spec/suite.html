@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>jMapping Test Results</title>
+  
+  <link rel="stylesheet" href="screw.css" type="text/css" media="screen" charset="utf-8" />
+  
+  <script src="../vendor/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/jquery.fn.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/jquery.print.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/screw.builder.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/screw.matchers.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/screw.events.js" type="text/javascript" charset="utf-8"></script>
+  <script src="screw.unit/screw.behaviors.js" type="text/javascript" charset="utf-8"></script>
+  <script src="smoke/smoke.core.js" type="text/javascript" charset="utf-8"></script>
+  <script src="smoke/smoke.stub.js" type="text/javascript" charset="utf-8"></script>
+  <script src="smoke/smoke.mock.js" type="text/javascript" charset="utf-8"></script>
+  <script src="smoke/screw.mocking.js" type="text/javascript" charset="utf-8"></script>
+  <script src="spec_helper.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script src="../vendor/jquery.metadata.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../jquery.jmapping.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script src="jmapping_spec.js" type="text/javascript" charset="utf-8"></script>
+  
+</head>
+<body>
+  <div class="wrapper">
+    <div id="map"></div>
+    <div id="map-side-bar">
+      <div class="map-location" data="{id: 5, point: {lat: 72, lng: 75}, category: 'bogus'}">
+        <a href="#" id="location5" class="map-link">Some Place</a>
+        <div class="info-box">
+          <p>Some Thing for the info box.</p>
+        </div>
+      </div>
+      <div class="map-location" data="{id: 8, point: {lat: 78, lng: 73}, category: 'bogus'}">
+        <a href="#" id="location8" class="map-link">Another Place</a>
+        <div class="info-box">
+          <p>Example Text.</p>
+        </div>
+      </div>
+    </div>
+    <ul id="map-item-list">
+      <li class="location" data="{id: 27, point: {lat: 72, lng: 75}, category: 'fun'}">
+        <a href="#" id="location27" class="map-item">Some Place</a>
+        <div class="info-html">
+          <p>Some Thing for the info box.</p>
+        </div>
+      </li>
+      <li class="location" data="{id: 23, point: {lat: 78, lng: 73}, category: 'bogus'}">
+        <a href="#" id="location23" class="map-item">Another Place</a>
+        <div class="info-html">
+          <p>Example Text.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
