@@ -61,47 +61,55 @@ Options
 These are options that can be passed to the `jMapping` function to change specific settings.
 
 
-* **`side_bar_selector`**:
+* `side_bar_selector`:
   * *Default*: `"#map-side-bar:first"`
   * This defines the selector where location items will be searched for within.
-* **`location_selector`**:
+* `location_selector`:
   * *Default*: `".map-location"`
   * This defines the selector for location items. This is the element that the metadata
     needs to be associated with. The plugin will for item matching this selector *inside* of
     the side bar element.
-* **`link_selector`**:
+* `link_selector`:
   * *Default*: `a.map-link`
   * This selector defines the link that will be used to "activate" a marker on the map. 
     If info window elements are provided the HTML inside of them will be loaded into 
     the pop up window when these links are clicked. You should set this value to `false`
     if you do not wish to use this functionality.
     These links will be searched for inside of the location elements specified in the `location_selector`.
-* **`info_window_selector`**:
+* `info_window_selector`:
   * *Default*: `".info-box"`
   * This selector defines where the content for the Google Maps Info window for each location marker is.
     This element will be searched for inside of the location elements specified in the `location_selector`.
     If no element is found no Info Window will be attached to the marker.
-* **`metadata_options`**:
+* `metadata_options`:
   * *Default*: `{type: "attr", name: "data"}`
   * This is the set of options passed to the jQuery metadata function. It defines how the necessary
     metadata for each location will be searched for.
     See the [metadata plugins docs](http://docs.jquery.com/Plugins/Metadata/metadata#toptions) for more info.
-* **`info_window_max_width`**:
+* `info_window_max_width`:
   * *Default*: `425`
   * This specifies what the max width of the Google Maps Info Windows can be when a marker is activated.
     Otherwise it will expand to fit the width of the content.
-* **`category_icon_options`**:
+* `map_config`:
+  * *Default*: *N/A*
+  * This can be set to a function that will accept the Google maps object as it's only parameter.
+    The function can be used to set the map type or add controls or perform any other functions you
+    want to do on the map object before the markers are placed on it.  
+    If not this option is not set the map type will be `G_NORMAL_MAP` and only the `GSmallMapControl`
+    control will be added.
+* `category_icon_options`:
   * *Default*: *N/A*
   * By default the plugin will use the default Google Maps marker icon. But if you can use this option
     to specify what options to pass to the MapIconMaker based on category data associated with the location.
-    It accepts 2 types of values: an object or a function.
+    It accepts 2 types of values: an object or a function.  
     If the setting is to an object it will take the category data on the location and look for a key on the object
     that matches and return that value. If there is no value for the supplied category, it will return
-    the value specified in the "default" key.
+    the value specified in the "default" key.  
     If the setting is set to a function it will call the function and  pass the value for the
     category data to the function, returning the result. This can be used for more complicated logic and for
     using something other then just string data in the category, such as an object with multiple data
-    attributes it's self.
+    attributes it's self. The function should return an object with attributes that are 
+    [valid for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
 
 
 Dependencies

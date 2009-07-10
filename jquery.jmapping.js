@@ -19,8 +19,8 @@ if (GMap2){
     if (typeof map_elm == "string"){
       map_elm = $(map_elm).get(0);
     }
-    this.settings = $.jMapping.defaults;
-    $.extend(this.settings, options);
+    this.settings = $.extend(true, {}, $.jMapping.defaults);
+    $.extend(true, this.settings, options);
     
     if (!($(map_elm).data('jMapping') instanceof $.jMapping)){
       if (GBrowserIsCompatible()) {
@@ -72,8 +72,12 @@ if (GMap2){
     mapped: true,
     createMap: function(map_elm, places){
       this.map = new GMap2(map_elm);
-      this.map.setMapType(G_NORMAL_MAP);
-      this.map.addControl(new GSmallMapControl());
+      if ($.isFunction(this.settings.map_config)){
+        this.settings.map_config(this.map);
+      } else {
+        this.map.setMapType(G_NORMAL_MAP);
+        this.map.addControl(new GSmallMapControl());
+      }
       this.map.centerAndZoomOnBounds(this.getBounds(places));
     },
     getPlaces: function(){
