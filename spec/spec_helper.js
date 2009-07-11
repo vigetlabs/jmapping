@@ -1,20 +1,26 @@
 var GMap2, GLatLng, GLatLngBounds, GMarker, MapIconMaker;
-var G_NORMAL_MAP = 'G_NORMAL_MAP';
+var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP';
 var GEvent = {};
-var GSmallMapControl = function(){};
+var GSmallMapControl = function(){this.object_name = 'GSmallMapControl';};
+var GSmallZoomControl = function(){this.object_name = 'GSmallZoomControl';};
+var GMapTypeControl = function(){this.object_name = 'GMapTypeControl';};
 function GBrowserIsCompatible(){return true;}
 
-Screw.Specifications.mockGMaps = function(marker_mock){
+Screw.Specifications.mockGMaps = function(marker_mock, gmap_mock_setup){
   // mock out GLatLng
   GLatLng = Smoke.MockFunction(function(lat, lng){}, 'GLatLng');
   GLatLng.should_be_invoked().at_least('once');
   
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
-  gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
-  gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
   gmap_mock.should_receive('centerAndZoomOnBounds').exactly('once');
   gmap_mock.should_receive('addOverlay').exactly('twice');
+  if (gmap_mock_setup){
+    gmap_mock_setup(gmap_mock);
+  } else {
+    gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
+    gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
+  }
   GMap2 = function(){};
   $.extend(GMap2.prototype, gmap_mock);
   

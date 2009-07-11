@@ -73,7 +73,7 @@ if (GMap2){
     createMap: function(map_elm, places){
       this.map = new GMap2(map_elm);
       if ($.isFunction(this.settings.map_config)){
-        this.settings.map_config(this.map);
+        this.settings.map_config.apply(this, [this.map]);
       } else {
         this.map.setMapType(G_NORMAL_MAP);
         this.map.addControl(new GSmallMapControl());
@@ -91,7 +91,10 @@ if (GMap2){
     },
     getBounds: function(places){
       var places_data = this.getPlacesData(places);
-      var bounds = new GLatLngBounds($.jMapping.makeGLatLng(places_data[0].point), $.jMapping.makeGLatLng(places_data[0].point));
+      var bounds = new GLatLngBounds(
+        $.jMapping.makeGLatLng(places_data[0].point), 
+        $.jMapping.makeGLatLng(places_data[0].point) );
+      
       for (var i=1, len = places_data.length ; i<len; i++) {
         bounds.extend($.jMapping.makeGLatLng(places_data[i].point));
       }
@@ -101,6 +104,7 @@ if (GMap2){
       var $place_elm = $(place_elm);
       var location_data = $place_elm.metadata(this.settings.metadata_options);
       var link = $place_elm.find(this.settings.link_selector);
+      
       if (link.attr('href').match(/^((\#.*)|(\s*))$/)){
         link.attr('href', ("#" + location_data.id));
       }
@@ -108,7 +112,7 @@ if (GMap2){
     chooseIconOptions: function(category){
       if (this.settings.category_icon_options){
         if ($.isFunction(this.settings.category_icon_options)){
-          return this.settings.category_icon_options(category);
+          return this.settings.category_icon_options.apply(this, [category]);
         } else {
           return this.settings.category_icon_options[category] || this.settings.category_icon_options['default'];
         }
@@ -138,7 +142,6 @@ if (GMap2){
       }
       
       this.gmarkers[parseInt(place_data.id, 10)] = marker;
-      
       return marker;
     },
     attachMapsEventToLinks: function(){

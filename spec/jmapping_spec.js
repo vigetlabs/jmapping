@@ -208,8 +208,85 @@ Screw.Unit(function(){
     });
   });
   
+  describe("setting a function to category_icon_options", function(){
+    var category_function;
+    before(function(){
+      // mock out Marker
+      var marker_mock = mock();
+      $('#map-side-bar .map-location .info-box').each(function(){
+        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+      });
+      
+      mockGMaps(marker_mock);
+      
+      // mock out Icon
+      MapIconMaker = mock();
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000'});
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF'});
+      
+      category_function = mock_function(function(category){
+        if (category.charAt(0).match(/[a-m]/i)){
+          return {primaryColor: '#CC0000'};
+        } else if (category.charAt(0).match(/[n-z]/i)){
+          return {primaryColor: '#33FFFF'};
+        } else {
+          return {primaryColor: '#00FFCC'};
+        }
+      }, 'category_icon_options_function');
+      category_function.should_be_invoked().exactly('twice');
+    });
+    after(function(){
+      $('#map').data('jMapping', null);
+      $('#map-side-bar .map-location a.map-link').attr('href', '#');
+      $('#map-side-bar .map-location a.map-link').die('click');
+    });
+    
+    it("should function correctly", function(){
+      $('#map').jMapping({
+        category_icon_options: category_function
+      });
+      expect($('#map').data('jMapping')).to(be_true);
+    });
+  });
   
-  // TODO: Tests for function based "category_icon_options"
-  // TODO: Test for "map_config" option
+  describe("using the map_config option to custom configure the map function", function(){
+    var map_config_function;
+    before(function(){
+      // mock out Marker
+      var marker_mock = mock();
+      $('#map-side-bar .map-location .info-box').each(function(){
+        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+      });
+      
+      mockGMaps(marker_mock, function(gmap_mock){
+        gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_HYBRID_MAP);
+        gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallZoomControl());
+        gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GMapTypeControl());
+      });
+      
+      // mock out Icon
+      MapIconMaker = mock();
+      MapIconMaker.should_receive('createMarkerIcon').exactly(0, 'times');
+      
+      map_config_function = mock_function(function(map){
+        map.setMapType(G_HYBRID_MAP);
+        map.addControl(new GSmallZoomControl());
+        map.addControl(new GMapTypeControl());
+      }, 'map_config_function');
+      map_config_function.should_be_invoked().exactly('once');
+    });
+    after(function(){
+      $('#map').data('jMapping', null);
+      $('#map-side-bar .map-location a.map-link').attr('href', '#');
+      $('#map-side-bar .map-location a.map-link').die('click');
+    });
+    
+    it("should function correctly", function(){
+      $('#map').jMapping({
+        map_config: map_config_function
+      });
+      expect($('#map').data('jMapping')).to(be_true);
+    });
+  });
   
 });
