@@ -7,7 +7,6 @@
  */
 
 if (GMap2){
-  // A convience function.
   GMap2.prototype.centerAndZoomOnBounds = function(bounds) {
     this.setCenter(bounds.getCenter(), this.getBoundsZoomLevel(bounds));
   };
@@ -134,7 +133,6 @@ if (GMap2){
       
       $info_window_elm = $place_elm.find(this.settings.info_window_selector);
       if ($info_window_elm.length > 0){
-        // bind the info HTML to the marker
         marker.bindInfoWindowHtml(
           $info_window_elm.html(), 
           {maxWidth: this.settings.info_window_max_width}
