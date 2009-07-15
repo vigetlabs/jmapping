@@ -5,6 +5,14 @@ This plugin is designed for quick development of a page that implements
 a Google Map with a list of the locations that are specified within the HTML.
 
 
+### Links
+
+* [Documentation](http://vigetlabs.github.com/jmapping/ "jMapping Documentation")
+* [Examples](http://vigetlabs.github.com/jmapping/examples/ "jMapping: Examples")
+* [Repository@GitHub](http://github.com/vigetlabs/jmapping)
+* [Downloads](http://wiki.github.com/vigetlabs/jmapping/downloads)
+
+
 Graceful degradation and Semantic Expectations
 -----------------------------------------------
 
@@ -67,8 +75,7 @@ These are options that can be passed to the `jMapping` function to change specif
 * `location_selector`:
   * *Default*: `".map-location"`
   * This defines the selector for location items. This is the element that the metadata
-    needs to be associated with. The plugin will for item matching this selector *inside* of
-    the side bar element.
+    needs to be associated with. The plugin will look for items matching this selector *inside* of the side bar element.
 * `link_selector`:
   * *Default*: `a.map-link`
   * This selector defines the link that will be used to "activate" a marker on the map. 
@@ -78,7 +85,7 @@ These are options that can be passed to the `jMapping` function to change specif
     These links will be searched for inside of the location elements specified in the `location_selector`.
 * `info_window_selector`:
   * *Default*: `".info-box"`
-  * This selector defines where the content for the Google Maps Info window for each location marker is.
+  * This selector defines where the content for the Google Maps info window for each location marker is.
     This element will be searched for inside of the location elements specified in the `location_selector`.
     If no element is found no Info Window will be attached to the marker.
 * `metadata_options`:
@@ -95,11 +102,11 @@ These are options that can be passed to the `jMapping` function to change specif
   * This can be set to a function that will accept the Google maps object as it's only parameter.
     The function can be used to set the map type or add controls or perform any other functions you
     want to do on the map object before the markers are placed on it.  
-    If not this option is not set the map type will be `G_NORMAL_MAP` and only the `GSmallMapControl`
+    If this option is not set the map type will be `G_NORMAL_MAP` and only the `GSmallMapControl`
     control will be added.
 * `category_icon_options`:
   * *Default*: *N/A*
-  * By default the plugin will use the default Google Maps marker icon. But if you can use this option
+  * By default the plugin will use the default Google Maps marker icon. But you can use this option
     to specify what options to pass to the MapIconMaker based on category data associated with the location.
     It accepts 2 types of values: an object or a function.  
     If the setting is to an object it will take the category data on the location and look for a key on the object
