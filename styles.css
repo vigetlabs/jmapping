@@ -32,7 +32,7 @@ body {
 	padding: 6px 10px;
 	background-color: #bde2ed;
 }
-#nav ul li a:link {
+#nav ul li a {
 	display: block;
 	padding: 6px 10px;
 }
