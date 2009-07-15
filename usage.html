@@ -85,7 +85,7 @@
         </tr>
         <tr>
           <td class="name"><code>info_window_selector</code></td>
-          <td class="description">This selector defines where the content for the Google Maps Info window for each location marker is. This element will be searched for inside of the location elements specified in the <code>location_selector</code>. If no element is found no Info Window will be attached to the marker.</td>
+          <td class="description">This selector defines where the content for the Google Maps info window for each location marker is. This element will be searched for inside of the location elements specified in the <code>location_selector</code>. If no element is found no Info Window will be attached to the marker.</td>
           <td class="default"><code>".info-box"</code></td>
         </tr>
         <tr>
@@ -106,7 +106,7 @@
         </tr>
         <tr>
           <td class="name"><code>category_icon_options</code></td>
-          <td class="description"><p>By default the plugin will use the default Google Maps marker icon. But if use this option to specify what options to pass to the MapIconMaker based on category data associated with the location. It accepts 2 types of values: an object or a function.</p>
+          <td class="description"><p>By default the plugin will use the default Google Maps marker icon. But you can use this option to specify what options to pass to the MapIconMaker based on category data associated with the location. It accepts 2 types of values: an object or a function.</p>
           <p>If this setting is set to an object it will take the category data on the location and look for a key on the object that matches and return that value. If there is no value for the category, it will return the value specified in the "default" key.</p>
           <p>If the setting is set to a function it will call the function and pass the value for the category data to the function returning the result. This can be used for more complicated logic and for using something other then just string data in the category, such as an object with multiple data attributes it's self. The function should return an object with attributes that are <a href="http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html" title="MapIconMaker v1.0 Reference">valid for a MarkerIconOptions object</a>.</p></td>
           <td class="default"><em>None</em></td>
