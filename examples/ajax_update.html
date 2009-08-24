@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>jMapping: Examples &raquo; Example 6</title>
+  <title>jMapping: Examples &raquo; Example 7</title>
   
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" href="../styles.css" type="text/css" media="screen" />
@@ -10,18 +10,19 @@
   <script src="js/mapiconmaker.js" type="text/javascript"></script>
   <script src="js/markermanager.js" type="text/javascript"></script>
   <script src="js/jquery.metadata.js" type="text/javascript"></script>
+  <script src="js/jquery.lowpro.js" type="text/javascript"></script>
   <script src="js/jquery.jmapping.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="container">
-    <h2>jMapping: Examples &raquo; Example 6</h2>
+    <h2>jMapping: Examples &raquo; Example 7</h2>
     
     <div id="description">
-      <p>This is an example of passing a function to the <code>category_icon_options</code> setting to change the way the marker icon is displayed based on categories set for each location.</p>
+      <p>This is an example of how the markers can up updated via ajax.<br />Below is the HTML and Javascript that is used on this page.</p>
     </div>
     
     <div id="code">
-      <script src="http://gist.github.com/147385.js"></script>
+      <script src="http://gist.github.com/174039.js"></script>
     </div>
     <br class="clear" />
     
@@ -48,22 +49,20 @@
       </div>
     </div>
     
-    <div class="footer"></div>
+    <div class="footer">
+      <p id="pagination"><a href="_ajax.html">Click For More Locations</a></p>
+    </div>
   </div>
   
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#map').jMapping({
-      category_icon_options: function(category){
-        if (category.charAt(0).match(/[a-m]/i)){
-          return {primaryColor: '#E8413A', cornerColor: '#EBEBEB'};
-        } else if (category.charAt(0).match(/[n-z]/i)){
-          return {primaryColor: '#465AE0', cornerColor: '#EBEBEB'};
-        } else {
-          return {primaryColor: '#7CDF65'};
-        }
+    $('p#pagination a').attach(Remote.Link, {
+      success: function(html){
+        $('#map-side-bar').html(html);
+        $('#map').jMapping('update');
       }
     });
+    $('#map').jMapping();
   });
 </script>
 </body>

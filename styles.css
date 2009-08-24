@@ -92,6 +92,21 @@ hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 	padding: 7px 20px;
 }
 
+p#pagination a {
+	background-color: #f4dea4;
+	font-style: normal;
+	text-decoration: none;
+	border: 1px solid #666;
+	float: left;
+	padding: 3px 7px;
+	margin: 0px 5px;
+	color: #333;
+}
+
+p#pagination a:hover {
+	background-color: #f4a99f;
+}
+
 table.options {
 	background-color: #fff;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>jMapping: Examples &raquo; Example 6</title>
+  <title>jMapping: Examples &raquo; Example 8</title>
   
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" href="../styles.css" type="text/css" media="screen" />
@@ -10,18 +10,19 @@
   <script src="js/mapiconmaker.js" type="text/javascript"></script>
   <script src="js/markermanager.js" type="text/javascript"></script>
   <script src="js/jquery.metadata.js" type="text/javascript"></script>
+  <script src="js/jquery.quickpaginate.js" type="text/javascript"></script>
   <script src="js/jquery.jmapping.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="container">
-    <h2>jMapping: Examples &raquo; Example 6</h2>
+    <h2>jMapping: Examples &raquo; Example 8</h2>
     
     <div id="description">
-      <p>This is an example of passing a function to the <code>category_icon_options</code> setting to change the way the marker icon is displayed based on categories set for each location.</p>
+      <p>This is an example of how the map markers can up updated via on-the-page Javascript.<br />Below is the HTML and Javascript that is used on this page.</p>
     </div>
     
     <div id="code">
-      <script src="http://gist.github.com/147385.js"></script>
+      <script src="http://gist.github.com/174054.js"></script>
     </div>
     <br class="clear" />
     
@@ -46,23 +47,36 @@
           <p>A hands-on museum of science, art, and human perception in San Francisco.</p>
         </div>
       </div>
+      <div class="map-location" data="{id: 4, point: {lng: -122.2940333, lat: 37.8752067}, category: 'food'}">
+        <a href="#" class="map-link">ACME Bread</a>
+        <div class="info-box">
+          <p>Best Bread in the Bay.</p>
+        </div>
+      </div>
+      <div class="map-location" data="{id: 5, point: {lng: -122.2690830, lat: 37.8796000}, category: 'restaurant'}">
+        <a href="#" class="map-link">Chez Panisse</a>
+        <div class="info-box">
+          <p>Alice Waters' restaurant. Birthplace of California cuisine.</p>
+        </div>
+      </div>
     </div>
     
-    <div class="footer"></div>
+    <div class="footer">
+      <p id="pagination"></p>
+    </div>
   </div>
   
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#map').jMapping({
-      category_icon_options: function(category){
-        if (category.charAt(0).match(/[a-m]/i)){
-          return {primaryColor: '#E8413A', cornerColor: '#EBEBEB'};
-        } else if (category.charAt(0).match(/[n-z]/i)){
-          return {primaryColor: '#465AE0', cornerColor: '#EBEBEB'};
-        } else {
-          return {primaryColor: '#7CDF65'};
-        }
-      }
+    $(document).bind('init_finished.quickpaginate', function(e){
+      $('#map').jMapping({location_selector: '.map-location:visible'});
+    });
+    $(document).bind('paginate.quickpaginate', function(e, direction, page){
+      $('#map').jMapping('update');
+    });
+    $('#map-side-bar .map-location').quickpaginate({
+      perpage: 2, showcounter: false, 
+      pager: $("p#pagination")
     });
   });
 </script>

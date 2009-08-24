@@ -58,6 +58,22 @@
 });
 </code></pre>
 
+<br />
+
+    <p>If you need to change the markers on the map, usually for some type of pagination, this can be done by simply updating the content of the "side-bar" container to contain new location data and then calling the update function:</p>
+    
+<pre><code>$('#map-side-bar').load('ajax/path/file.html', nil, function(){
+  $('#map').jMapping('update');
+});</code></pre>
+
+<p><em>OR</em></p>
+
+<pre><code>$('#map-side-bar').load('ajax/path/file.html', nil, function(){
+  $('#map').data('jMapping').update();
+});</code></pre>
+
+<br />
+
     <h2>Options</h2>
     <table cellpadding="0" cellspacing="0" class="options">
       <thead>
