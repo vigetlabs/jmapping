@@ -112,11 +112,13 @@
   		prevbut = settings.pager.find("."+settings.prev_class+' a');
   		prevbut.addClass("qp_disabled");
 		
-  		nextbut.click(function(){
+  		nextbut.click(function(e){
+  		  e.preventDefault();
   			goNext();
   			return false;
   		});
-  		prevbut.click(function(){
+  		prevbut.click(function(e){
+  		  e.preventDefault();
   			goPrev();
   			return false;
   		});
