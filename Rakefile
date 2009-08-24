@@ -22,7 +22,7 @@ task :minify => ['jquery.jmapping.min.js']
 Rake::PackageTask.new("jquery.jmapping", (ENV['VERSION'] || :noversion)) do |p|
   p.need_tar_gz = true
   p.need_zip = true
-  p.package_files.add 'jquery.*.js', 'README.markdown'
+  p.package_files.add 'jquery.*.js', 'README.markdown', 'CHANGELOG'
 end
 
 if PLATFORM['darwin']

@@ -63,6 +63,19 @@ Then just call the `jMapping` function on the map element:
     });
 
 
+If you need to change the markers on the map, usually for some type of pagination, this can be done by simply updating the content of the "side-bar" container to contain new location data and then calling the update function:
+
+    $('#map-side-bar').load('ajax/path/file.html', nil, function(){
+      $('#map').jMapping('update');
+    });
+
+*OR*
+
+    $('#map-side-bar').load('ajax/path/file.html', nil, function(){
+      $('#map').data('jMapping').update();
+    });
+
+
 Options
 --------
 
@@ -124,6 +137,7 @@ Dependencies
 
 * [jQuery 1.3.2](http://docs.jquery.com/Downloading_jQuery)
 * [jQuery Metadata plugin 2.1](http://plugins.jquery.com/project/metadata)
+* [MarkerManager 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/1.1/)
 * [MapIconMaker 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/)
 
 
