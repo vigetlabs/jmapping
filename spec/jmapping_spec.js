@@ -41,7 +41,7 @@ Screw.Unit(function(){
     
     it("should hide the info html elements", function(){
       $('#map').jMapping();
-      expect($('#map-side-bar .map-location .info-box').is(':hidden')).to(be_true);
+      expect($('#map-side-bar .map-location .info-box')).to(match_selector, ':hidden');
     });
     
     it("should set the links to the correct URL", function(){
@@ -144,7 +144,7 @@ Screw.Unit(function(){
       $('#map').jMapping();
       $('#map-side-bar').html(update_html);
       $('#map').data('jMapping').update();
-      expect($('#map-side-bar .map-location .info-box').is(':hidden')).to(be_true);
+      expect($('#map-side-bar .map-location .info-box')).to(match_selector, ':hidden');
     });
     
     it("should set the links to the correct URL", function(){
@@ -214,7 +214,7 @@ Screw.Unit(function(){
     });
     
     it("should hide the info html elements", function(){
-      expect($('ul#map-item-list li.location .info-html').is(':hidden')).to(be_true);
+      expect($('ul#map-item-list li.location .info-html')).to(match_selector, ':hidden');
     });
     
     it("should set the links to the correct URL", function(){
