@@ -101,9 +101,7 @@ if (GMap2){
         var location_data = $place_elm.metadata(settings.metadata_options);
         var link = $place_elm.find(settings.link_selector);
 
-        if (link.attr('href').match(/^((\#.*)|(\s*))$/)){ // Should we do this or just replace it.
-          link.attr('href', ("#" + location_data.id));
-        }
+        link.attr('href', ("#" + location_data.id));
       };
       
       var chooseIconOptions = function(category){
