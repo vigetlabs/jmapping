@@ -14,7 +14,7 @@ if (GMap2){
 
 (function($){
   $.jMapping = function(map_elm, options){
-    var settings, gmarkers, mapped, map, markerManager, places, bounds;
+    var settings, gmarkers, mapped, map, markerManager, places, bounds, jMapper;
     map_elm = (typeof map_elm == "string") ? $(map_elm).get(0) : map_elm;
     
     if (!($(map_elm).data('jMapping'))){ // TODO: Should we use a different test here?
@@ -45,10 +45,11 @@ if (GMap2){
         }
 
         places.each(function(){
-          createMarker(this);
+          var marker = createMarker(this);
           if (!(settings.link_selector === false)){
             setupLink(this);
           }
+          $(document).trigger('markerCreated.jMapping', [marker]);
         });
 
         bounds_zoom_level = map.getBoundsZoomLevel(bounds);
@@ -164,11 +165,16 @@ if (GMap2){
       };
       
       if (GBrowserIsCompatible()) {
-        init();
-        return {
+        if ($(document).trigger('beforeMapping.jMapping', [settings]) != false){
+          init();
+          mapped = true;
+        } else {
+          mapped = false;
+        }
+        jMapper = {
           gmarkers: gmarkers,
           settings: settings,
-          mapped: true,
+          mapped: mapped,
           map: map,
           markerManager: markerManager,
           gmarkersArray: gmarkersArray,
@@ -176,30 +182,20 @@ if (GMap2){
           getPlacesData: getPlacesData,
           getPlaces: getPlaces,
           update: function(){
-            init(true);
-            this.map = map;
-            this.gmarkers = gmarkers;
-            this.markerManager = markerManager;
+            if ($(document).trigger('beforeUpdate.jMapping', [this])  != false){
+              init(true);
+              this.map = map;
+              this.gmarkers = gmarkers;
+              this.markerManager = markerManager;
+              $(document).trigger('afterUpdate.jMapping', [this]);
+            }
           }
         };
+        $(document).trigger('afterMapping.jMapping', [jMapper]);
+        return jMapper;
       } else {
-        return {
-          gmarkers: gmarkers,
-          settings: settings,
-          mapped: false,
-          map: map,
-          markerManager: markerManager,
-          gmarkersArray: gmarkersArray,
-          getBounds: getBounds,
-          getPlacesData: getPlacesData,
-          getPlaces: getPlaces,
-          update: function(){
-            init(true);
-            this.map = map;
-            this.gmarkers = gmarkers;
-            this.markerManager = markerManager;
-          }
-        };
+        mapped = false;
+        return null;
       }
     } else {
       return $(map_elm).data('jMapping');
