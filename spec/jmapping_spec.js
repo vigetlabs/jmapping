@@ -56,6 +56,55 @@ Screw.Unit(function(){
       expect($('#map').data('jMapping')).to(be_true);
     });
     
+    describe("object created", function(){
+      var jMapper;
+      before(function(){
+        $('#map').jMapping();
+        jMapper = $('#map').data('jMapping');
+      });
+      
+      it("should have a settings object", function(){
+        expect(typeof jMapper.settings).to(equal, 'object');
+      });
+      
+      it("should have a mapped boolean", function(){
+        expect(typeof jMapper.mapped).to(equal, 'boolean');
+        expect(jMapper.mapped).to(be_true);
+      });
+      
+      it("should have a map GMap2 object", function(){
+        expect(typeof jMapper.map).to(equal, 'object');
+        expect(jMapper.map instanceof GMap2).to(be_true);
+      });
+      
+      it("should have a markerManager MarkerManager object", function(){
+        expect(typeof jMapper.markerManager).to(equal, 'object');
+        expect(jMapper.markerManager instanceof MarkerManager).to(be_true);
+      });
+      
+      it("should have a gmarkersArray method that returns an array of markers", function(){
+        expect($.isFunction(jMapper.gmarkersArray)).to(be_true);
+        expect(jMapper.gmarkersArray()[0] instanceof GMarker).to(be_true);
+      });
+      
+      it("should have a getBounds method", function(){
+        expect($.isFunction(jMapper.getBounds)).to(be_true);
+      });
+      
+      it("should have a getPlacesData method", function(){
+        expect($.isFunction(jMapper.getPlacesData)).to(be_true);
+      });
+      
+      it("should have a getPlaces method that returns a jQuery object", function(){
+        expect($.isFunction(jMapper.getPlaces)).to(be_true);
+        expect(jMapper.getPlaces() instanceof jQuery).to(be_true);
+      });
+      
+      it("should have an update method", function(){
+        expect($.isFunction(jMapper.update)).to(be_true);
+      });
+    });
+    
     describe("setting link_selector to false", function(){
       before(function(){
         $('#map').jMapping({link_selector: false});
