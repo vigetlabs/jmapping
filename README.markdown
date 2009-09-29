@@ -23,8 +23,8 @@ It also expects the necessary metadata to be on the location element.
 This way the HTML semantically reflects that all of those parts and information are associated with the specific location or place.
 
 
-Usage
-------
+Basic Usage
+------------
 
 [Start by getting a Google Maps API key](http://code.google.com/apis/maps/signup.html).
 Download the necessary dependencies and jMapping.
@@ -130,6 +130,60 @@ These are options that can be passed to the `jMapping` function to change specif
     using something other then just string data in the category, such as an object with multiple data
     attributes it's self. The function should return an object with attributes that are 
     [valid for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
+
+Object API
+-----------
+
+The jMapping API object is available from the "jMapping" data value on
+the selector passed to the original $().jMapping function.
+
+For example:
+
+    $('#map').jMapping();
+    $('#map').data('jMapping'); // returns the jMapping API object
+
+The API of that object:
+
+* `gmarkers`:
+  * The GMarker objects that have been placed on the map.
+    Stored in an object where the keys are the id's are those provided in the metadata
+* `settings`:
+  * The settings for this jMapping instance.
+* `mapped`:
+  * Did the plugin create the map and markers as expected or not.
+* `map`:
+  * the GMap2 Google Map API object.
+* `markerManager`:
+  * The Google Maps MarkerManager object for manipulating groups of markers, has control over all markers on the map.
+* `gmarkersArray`:
+  * Returns an array of all the markers currently on the map.
+* `getBounds`:
+  * The Google Maps GLatLngBounds bounds object for all the markers on the map.
+* `getPlaces`:
+  * Returns the set of jQuery objects for the place DOM Elements.
+* `getPlacesData`:
+  * Returns an array of all the metadata for each place returned by `getPlaces`
+* `update`:
+  * Used to update the map if the HTML DOM for the locations has changed.
+
+
+Event API
+----------
+
+There a number of events that fire as jMapping is used.
+
+* `beforeMapping.jMapping`
+  * This fires immediately before the main functionality of the plugin begins and is passed the settings object.
+    If it returns false the mapping will be canceled.
+* `afterMapping.jMapping`
+  * This fires immediately after the plugins mapping has finished, passes in the jMapping API object.
+* `beforeUpdate.jMapping`
+  * This fires right before the map is updated via the "update" method. The jMapping API object is passed to the callback.
+    If the callback returns false the update will be canceled.
+* `afterUpdate.jMapping`
+  * This fires immediately after the map is updated.
+* `markerCreated.jMapping`
+  * This fires right after a map marker is created, the marker object is passed to the callback.
 
 
 Dependencies

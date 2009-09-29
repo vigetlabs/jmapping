@@ -56,6 +56,27 @@ Screw.Unit(function(){
       expect($('#map').data('jMapping')).to(be_true);
     });
     
+    it('should fire a "beforeMapping.jMapping" event', function(){
+      var callback = mock_function(function(){}, 'beforeMapping.jMapping');
+      callback.should_be_invoked().exactly('once');
+      $(document).bind('beforeMapping.jMapping', callback);
+      $('#map').jMapping();
+    });
+    
+    it('should fire a "afterMapping.jMapping" event', function(){
+      var callback = mock_function(function(){}, 'afterMapping.jMapping');
+      callback.should_be_invoked().exactly('once');
+      $(document).bind('afterMapping.jMapping', callback);
+      $('#map').jMapping();
+    });
+    
+    it('should fire a "markerCreated.jMapping" event', function(){
+      var callback = mock_function(function(){}, 'markerCreated.jMapping');
+      callback.should_be_invoked().exactly('twice');
+      $(document).bind('markerCreated.jMapping', callback);
+      $('#map').jMapping();
+    });
+    
     describe("object created", function(){
       var jMapper;
       before(function(){
@@ -202,6 +223,26 @@ Screw.Unit(function(){
       $('#map').data('jMapping').update();
       expect($('#map-side-bar .map-location a.map-link#location22').attr('href')).to(equal, '#22');
       expect($('#map-side-bar .map-location a.map-link#location28').attr('href')).to(equal, '#28');
+    });
+    
+    it('should fire the "beforeUpdate.jMapping" event', function(){
+      var callback = mock_function(function(){}, 'beforeUpdate.jMapping');
+      callback.should_be_invoked().exactly('once');
+      $(document).bind('beforeUpdate.jMapping', callback);
+      
+      $('#map').jMapping();
+      $('#map-side-bar').html(update_html);
+      $('#map').data('jMapping').update();
+    });
+    
+    it('should fire the "afterUpdate.jMapping" event', function(){
+      var callback = mock_function(function(){}, 'afterUpdate.jMapping');
+      callback.should_be_invoked().exactly('once');
+      $(document).bind('afterUpdate.jMapping', callback);
+      
+      $('#map').jMapping();
+      $('#map-side-bar').html(update_html);
+      $('#map').data('jMapping').update();
     });
     
     describe("click events for links", function(){
