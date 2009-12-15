@@ -272,18 +272,18 @@ Screw.Unit(function(){
       $('ul#map-item-list li.location .info-html').each(function(){
         marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 380});
       });
-      
+
       mockGMaps(marker_mock);
       mockMarkerManager();
-      
+
       // mock out Icon
       MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000'});
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF'});
-      
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000', style: 'Marker'});
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF', style: 'Marker'});
+
       $('#map').jMapping({
-        side_bar_selector: 'ul#map-item-list', 
-        location_selector: 'li.location', 
+        side_bar_selector: 'ul#map-item-list',
+        location_selector: 'li.location',
         link_selector: 'a.map-item',
         info_window_selector: '.info-html',
         info_window_max_width: 380,
@@ -399,8 +399,8 @@ Screw.Unit(function(){
       
       // mock out Icon
       MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000'});
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF'});
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000', style: 'Marker'});
+      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF', style: 'Marker'});
       
       category_function = mock_function(function(category){
         if (category.charAt(0).match(/[a-m]/i)){

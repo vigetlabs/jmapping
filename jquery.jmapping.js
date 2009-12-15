@@ -122,14 +122,17 @@ if (GMap2){
           return {};
         }
       };
-      
+
       var createMarker = function(place_elm){
         var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm;
 
         place_data = $place_elm.metadata(settings.metadata_options);
         point = $.jMapping.makeGLatLng(place_data.point);
         if (settings.category_icon_options){
-          var custom_icon = MapIconMaker.createMarkerIcon(chooseIconOptions(place_data.category));
+          var icon_options = chooseIconOptions(place_data.category)
+          if(!icon_options.style) icon_options.style = 'Marker'
+
+          var custom_icon = MapIconMaker['create'+icon_options.style+'Icon'](icon_options);
           marker = new GMarker(point, {icon: custom_icon});
         } else {
           marker = new GMarker(point);
