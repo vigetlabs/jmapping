@@ -1,3 +1,7 @@
+== 1.2.1 / 2010-03-12
+
+* Also call `map.checkResize()` when updating the map.
+
 == 1.2 / 2010-03-12
 
 * Add new object and event API.
