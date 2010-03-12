@@ -1,5 +1,5 @@
 /*
- * jMapping v1.1 - jQuery plugin for creating Google Maps
+ * jMapping v1.2 - jQuery plugin for creating Google Maps
  *
  * Copyright (c) 2009 Brian Landau (Viget Labs)
  * MIT License: http://www.opensource.org/licenses/mit-license.php
