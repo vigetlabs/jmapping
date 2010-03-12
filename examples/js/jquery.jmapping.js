@@ -1,5 +1,5 @@
 /*
- * jMapping v1.2 - jQuery plugin for creating Google Maps
+ * jMapping v1.2.1 - jQuery plugin for creating Google Maps
  *
  * Copyright (c) 2009 Brian Landau (Viget Labs)
  * MIT License: http://www.opensource.org/licenses/mit-license.php
@@ -38,6 +38,7 @@ if (GMap2){
         if (doUpdate){
           gmarkers = {};
           markerManager.clearMarkers();
+          map.checkResize();
           map.centerAndZoomOnBounds(bounds);
         } else {
           map = createMap();
