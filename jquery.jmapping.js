@@ -23,7 +23,7 @@ if (GMap2){
       gmarkers = {};
       
       var init = function(doUpdate){
-        var info_window_selector;
+        var info_window_selector, min_zoom, bounds_zoom_level;
 
         info_window_selector = [
           settings.side_bar_selector, 
@@ -86,20 +86,20 @@ if (GMap2){
       
       var getBounds = function(){
         var places_data = getPlacesData();
-        var bounds = new GLatLngBounds(
+        var newBounds = new GLatLngBounds(
           $.jMapping.makeGLatLng(places_data[0].point), 
           $.jMapping.makeGLatLng(places_data[0].point) );
 
         for (var i=1, len = places_data.length ; i<len; i++) {
-          bounds.extend($.jMapping.makeGLatLng(places_data[i].point));
+          newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
         }
-        return bounds;
+        return newBounds;
       };
       
       var setupLink = function(place_elm){
-        var $place_elm = $(place_elm);
-        var location_data = $place_elm.metadata(settings.metadata_options);
-        var link = $place_elm.find(settings.link_selector);
+        var $place_elm = $(place_elm),
+            location_data = $place_elm.metadata(settings.metadata_options),
+            link = $place_elm.find(settings.link_selector);
 
         link.attr('href', ("#" + location_data.id));
       };
