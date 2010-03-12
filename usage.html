@@ -129,6 +129,94 @@
         </tr>
       </tbody>
     </table>
+    
+    <h2 id="object_api">Object API</h2>
+
+    <p>The jMapping API object is available from the &#8220;jMapping&#8221; data value on
+    the selector passed to the original $().jMapping function.</p>
+
+    <p>For example:</p>
+
+    <pre><code>$('#map').jMapping();
+    $('#map').data('jMapping'); // returns the jMapping API object
+    </code></pre>
+
+    <p><strong>The API of that object</strong>:</p>
+
+    <ul>
+    <li><code>gmarkers</code>:
+    <ul>
+    <li>The GMarker objects that have been placed on the map.
+    Stored in an object where the keys are the id&#8217;s are those provided in the metadata</li>
+    </ul></li>
+    <li><code>settings</code>:
+    <ul>
+    <li>The settings for this jMapping instance.</li>
+    </ul></li>
+    <li><code>mapped</code>:
+    <ul>
+    <li>Did the plugin create the map and markers as expected or not.</li>
+    </ul></li>
+    <li><code>map</code>:
+    <ul>
+    <li>the GMap2 Google Map API object.</li>
+    </ul></li>
+    <li><code>markerManager</code>:
+    <ul>
+    <li>The Google Maps MarkerManager object for manipulating groups of markers, has control over all markers on the map.</li>
+    </ul></li>
+    <li><code>gmarkersArray</code>:
+    <ul>
+    <li>Returns an array of all the markers currently on the map.</li>
+    </ul></li>
+    <li><code>getBounds</code>:
+    <ul>
+    <li>The Google Maps GLatLngBounds bounds object for all the markers on the map.</li>
+    </ul></li>
+    <li><code>getPlaces</code>:
+    <ul>
+    <li>Returns the set of jQuery objects for the place DOM Elements.</li>
+    </ul></li>
+    <li><code>getPlacesData</code>:
+    <ul>
+    <li>Returns an array of all the metadata for each place returned by <code>getPlaces</code></li>
+    </ul></li>
+    <li><code>update</code>:
+    <ul>
+    <li>Used to update the map if the HTML DOM for the locations has changed.</li>
+    </ul></li>
+    </ul>
+
+    <h2 id="event_api">Event API</h2>
+
+    <p>There a number of events that fire as jMapping is used.</p>
+
+    <ul>
+    <li><code>beforeMapping.jMapping</code>
+    <ul>
+    <li>This fires immediately before the main functionality of the plugin begins and is passed the settings object.
+    If it returns false the mapping will be canceled.</li>
+    </ul></li>
+    <li><code>afterMapping.jMapping</code>
+    <ul>
+    <li>This fires immediately after the plugins mapping has finished, passes in the jMapping API object.</li>
+    </ul></li>
+    <li><code>beforeUpdate.jMapping</code>
+    <ul>
+    <li>This fires right before the map is updated via the &#8220;update&#8221; method. The jMapping API object is passed to the callback.
+    If the callback returns false the update will be canceled.</li>
+    </ul></li>
+    <li><code>afterUpdate.jMapping</code>
+    <ul>
+    <li>This fires immediately after the map is updated.</li>
+    </ul></li>
+    <li><code>markerCreated.jMapping</code>
+    <ul>
+    <li>This fires right after a map marker is created, the marker object is passed to the callback.</li>
+    </ul></li>
+    </ul>
+    
+    
     </div>
       
     <div class="footer"></div>
