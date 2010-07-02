@@ -130,6 +130,10 @@ These are options that can be passed to the `jMapping` function to change specif
     using something other then just string data in the category, such as an object with multiple data
     attributes it's self. The function should return an object with attributes that are 
     [valid for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
+* `default_zoom_level`:
+  * *Default*: *N/A*
+  * Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.
+
 
 Object API
 -----------
