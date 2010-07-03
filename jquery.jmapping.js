@@ -87,12 +87,17 @@ if (GMap2){
       
       var getBounds = function(){
         var places_data = getPlacesData();
-        var newBounds = new GLatLngBounds(
-          $.jMapping.makeGLatLng(places_data[0].point), 
-          $.jMapping.makeGLatLng(places_data[0].point) );
+        var newBounds;
+        if (places_data.length > 0) {
+          newBounds = new GLatLngBounds(
+            $.jMapping.makeGLatLng(places_data[0].point), 
+            $.jMapping.makeGLatLng(places_data[0].point) );
 
-        for (var i=1, len = places_data.length ; i<len; i++) {
-          newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
+          for (var i=1, len = places_data.length ; i<len; i++) {
+            newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
+          }
+        } else {
+          newBounds = new GLatLngBounds(0.0, 0,0);
         }
         return newBounds;
       };
