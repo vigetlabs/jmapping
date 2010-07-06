@@ -81,6 +81,7 @@ if (GMap2){
       
       var getPlacesData = function(){
         return places.map(function(){
+          $(this).data('metadata', false);  // don't cache the metadata
           return $(this).metadata(settings.metadata_options);
         });
       };
