@@ -1,7 +1,7 @@
 /*
- * jMapping v1.2.1 - jQuery plugin for creating Google Maps
+ * jMapping v1.3.0 - jQuery plugin for creating Google Maps
  *
- * Copyright (c) 2009 Brian Landau (Viget Labs)
+ * Copyright (c) 2009-2010 Brian Landau (Viget Labs)
  * MIT License: http://www.opensource.org/licenses/mit-license.php
  *
  */
@@ -72,6 +72,9 @@ if (GMap2){
           map.addControl(new GSmallMapControl());
         }
         map.centerAndZoomOnBounds(bounds);
+        if (typeof settings.default_zoom_level == "number"){
+          map.setZoom(settings.default_zoom_level);
+        }
         return map;
       };
       
@@ -208,7 +211,7 @@ if (GMap2){
       link_selector: 'a.map-link',
       info_window_selector: '.info-box',
       info_window_max_width: 425,
-      metadata_options: {type: 'attr', name: 'data'}
+      metadata_options: {type: 'attr', name: 'data-jmapping'}
     },
     makeGLatLng: function(place_point){
       return new GLatLng(place_point.lat, place_point.lng);
