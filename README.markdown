@@ -37,7 +37,7 @@ Make sure you include the necessary scripts in your page:
     <script type="text/javascript" src="jquery.metadata.js"></script>
     <script type="text/javascript" src="jquery.jmapping.js"></script>
 
-Make sure your HTML has a `div` element for the Google map, and there is a container element with some locations and their data. The data by default is expected to be on the "data" attribute of the location (this can be configured):
+Make sure your HTML has a `div` element for the Google map, and there is a container element with some locations and their data. The data by default is expected to be on the "data-jmapping" attribute of the location (this can be configured):
 
     <div id="map"></div>
     
