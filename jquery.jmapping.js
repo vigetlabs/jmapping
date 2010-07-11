@@ -211,7 +211,7 @@ if (GMap2){
       link_selector: 'a.map-link',
       info_window_selector: '.info-box',
       info_window_max_width: 425,
-      metadata_options: {type: 'attr', name: 'data'}
+      metadata_options: {type: 'attr', name: 'data-jmapping'}
     },
     makeGLatLng: function(place_point){
       return new GLatLng(place_point.lat, place_point.lng);

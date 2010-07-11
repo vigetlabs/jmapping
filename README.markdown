@@ -42,13 +42,13 @@ Make sure your HTML has a `div` element for the Google map, and there is a conta
     <div id="map"></div>
     
     <div id="map-side-bar">
-      <div class="map-location" data="{id: 5, point: {lat: 35.925, lng: -79.053}, category: 'Gas'}">
+      <div class="map-location" data-jmapping="{id: 5, point: {lat: 35.925, lng: -79.053}, category: 'Gas'}">
         <a href="#" class="map-link">Some Place</a>
         <div class="info-box">
           <p>Some thing for the info box.</p>
         </div>
       </div>
-      <div class="map-location" data="{id: 8, point: {lat: 35.935, lng: -79.024}, category: 'Food'}">
+      <div class="map-location" data-jmapping="{id: 8, point: {lat: 35.935, lng: -79.024}, category: 'Food'}">
         <a href="#" class="map-link">Another Place</a>
         <div class="info-box">
           <p>Example Text.</p>
