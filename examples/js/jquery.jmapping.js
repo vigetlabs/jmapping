@@ -1,5 +1,5 @@
 /*
- * jMapping v1.3.0 - jQuery plugin for creating Google Maps
+ * jMapping v1.4.0 - jQuery plugin for creating Google Maps
  *
  * Copyright (c) 2009-2010 Brian Landau (Viget Labs)
  * MIT License: http://www.opensource.org/licenses/mit-license.php
@@ -33,7 +33,7 @@ if (GMap2){
         $(info_window_selector).hide();
 
         places = getPlaces();
-        bounds = getBounds();
+        bounds = getBounds(doUpdate);
 
         if (doUpdate){
           gmarkers = {};
@@ -82,14 +82,17 @@ if (GMap2){
         return $(settings.side_bar_selector+' '+settings.location_selector);
       };
       
-      var getPlacesData = function(){
+      var getPlacesData = function(doUpdate){
         return places.map(function(){
+          if (doUpdate){
+            $(this).data('metadata', false);
+          }
           return $(this).metadata(settings.metadata_options);
         });
       };
       
-      var getBounds = function(){
-        var places_data = getPlacesData();
+      var getBounds = function(doUpdate){
+        var places_data = getPlacesData(doUpdate);
         var newBounds = new GLatLngBounds(
           $.jMapping.makeGLatLng(places_data[0].point), 
           $.jMapping.makeGLatLng(places_data[0].point) );
@@ -119,14 +122,23 @@ if (GMap2){
           return {};
         }
       };
-      
+
       var createMarker = function(place_elm){
-        var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm;
+        var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm, custom_icon, icon_options;
 
         place_data = $place_elm.metadata(settings.metadata_options);
         point = $.jMapping.makeGLatLng(place_data.point);
         if (settings.category_icon_options){
-          var custom_icon = MapIconMaker.createMarkerIcon(chooseIconOptions(place_data.category));
+          icon_options = chooseIconOptions(place_data.category);
+          if (typeof icon_options === "string"){
+            custom_icon =  new GIcon(G_DEFAULT_ICON, icon_options);
+          } else if (icon_options instanceof GIcon){
+            custom_icon = icon_options;
+          } else {
+            if (!icon_options.style) icon_options.style = 'Marker';
+            custom_icon = MapIconMaker['create'+icon_options.style+'Icon'](icon_options);
+          }
+          
           marker = new GMarker(point, {icon: custom_icon});
         } else {
           marker = new GMarker(point);
@@ -185,6 +197,7 @@ if (GMap2){
           getPlaces: getPlaces,
           update: function(){
             if ($(document).trigger('beforeUpdate.jMapping', [this])  != false){
+              
               init(true);
               this.map = map;
               this.gmarkers = gmarkers;
