@@ -167,11 +167,11 @@ Screw.Unit(function(){
   });
   
   describe('jMapping with update', function(){
-    var update_html = '<div class="map-location" data="{id: 22, point: {lat: 72, lng: 75}, category: \'bogus\'}">'+
+    var update_html = '<div class="map-location" data-jmapping="{id: 22, point: {lat: 72, lng: 75}, category: \'bogus\'}">'+
 '      <a href="#" id="location22" class="map-link">Some New Place</a>'+
 '      <div class="info-box"><p>Test Text.</p></div>'+
 '    </div>'+
-'    <div class="map-location" data="{id: 28, point: {lat: 78, lng: 73}, category: \'sample\'}">'+
+'    <div class="map-location" data-jmapping="{id: 28, point: {lat: 78, lng: 73}, category: \'sample\'}">'+
 '      <a href="#" id="location28" class="map-link">Another Cool New Place</a>'+
 '      <div class="info-box"><p>New Text.</p></div>'+
 '    </div>';
