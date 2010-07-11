@@ -124,15 +124,21 @@ if (GMap2){
       };
 
       var createMarker = function(place_elm){
-        var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm;
+        var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm, custom_icon, icon_options;
 
         place_data = $place_elm.metadata(settings.metadata_options);
         point = $.jMapping.makeGLatLng(place_data.point);
         if (settings.category_icon_options){
-          var icon_options = chooseIconOptions(place_data.category)
-          if(!icon_options.style) icon_options.style = 'Marker'
-
-          var custom_icon = MapIconMaker['create'+icon_options.style+'Icon'](icon_options);
+          icon_options = chooseIconOptions(place_data.category);
+          if (typeof icon_options === "string"){
+            custom_icon =  new GIcon(G_DEFAULT_ICON, icon_options);
+          } else if (icon_options instanceof GIcon){
+            custom_icon = icon_options;
+          } else {
+            if (!icon_options.style) icon_options.style = 'Marker';
+            custom_icon = MapIconMaker['create'+icon_options.style+'Icon'](icon_options);
+          }
+          
           marker = new GMarker(point, {icon: custom_icon});
         } else {
           marker = new GMarker(point);

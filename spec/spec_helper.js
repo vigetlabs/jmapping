@@ -1,6 +1,7 @@
 var GMap2, GLatLng, GLatLngBounds, GMarker, MapIconMaker;
-var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP';
+var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP', G_DEFAULT_ICON = 'G_DEFAULT_ICON';
 var GEvent = {};
+var GIcon = function(){this.object_name = 'GIcon';};
 var GSmallMapControl = function(){this.object_name = 'GSmallMapControl';};
 var GSmallZoomControl = function(){this.object_name = 'GSmallZoomControl';};
 var GMapTypeControl = function(){this.object_name = 'GMapTypeControl';};
