@@ -47,6 +47,7 @@ Screw.Specifications.mockGMapsUpdate = function(marker_mock){
   gmap_mock.should_receive('getBoundsZoomLevel').exactly('twice').and_return(10);
   gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
   gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
+  gmap_mock.should_receive('checkResize').exactly('once');
   GMap2 = function(){};
   $.extend(GMap2.prototype, gmap_mock);
   

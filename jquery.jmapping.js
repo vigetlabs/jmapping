@@ -72,6 +72,9 @@ if (GMap2){
           map.addControl(new GSmallMapControl());
         }
         map.centerAndZoomOnBounds(bounds);
+        if (typeof settings.default_zoom_level == "number"){
+          map.setZoom(settings.default_zoom_level);
+        }
         return map;
       };
       
