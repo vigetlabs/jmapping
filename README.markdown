@@ -130,10 +130,10 @@ These are options that can be passed to the `jMapping` function to change specif
     using something other then just string data in the category, such as an object with multiple data
     attributes it's self.
     The object values for the associated category key or the function should return one of three data types:
-      1. A string, this will be used to create a default GIcon with the string as the image source.
-      2. A GIcon, this will be used as the icon for the GMarker object.
-      3. An object that has [valid options for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
-    If you use option 3 you may specify an additional `style` option out of ("Marker", "LabeledMarker",  or "FlatIcon").
+    1. A string, this will be used to create a default GIcon with the string as the image source.
+    2. A GIcon, this will be used as the icon for the GMarker object.
+    3. An object that has [valid options for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
+    If you use this third you may specify an additional `style` option out of ("Marker", "LabeledMarker",  or "FlatIcon").
     These correspond to the types of Marker Icons provided by the MapIconMaker library (see their docs for more detail).
 * `default_zoom_level`:
   * *Default*: *N/A*
