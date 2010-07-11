@@ -33,7 +33,7 @@ if (GMap2){
         $(info_window_selector).hide();
 
         places = getPlaces();
-        bounds = getBounds();
+        bounds = getBounds(doUpdate);
 
         if (doUpdate){
           gmarkers = {};
@@ -82,14 +82,17 @@ if (GMap2){
         return $(settings.side_bar_selector+' '+settings.location_selector);
       };
       
-      var getPlacesData = function(){
+      var getPlacesData = function(doUpdate){
         return places.map(function(){
+          if (doUpdate){
+            $(this).data('metadata', false);
+          }
           return $(this).metadata(settings.metadata_options);
         });
       };
       
-      var getBounds = function(){
-        var places_data = getPlacesData();
+      var getBounds = function(doUpdate){
+        var places_data = getPlacesData(doUpdate);
         var newBounds = new GLatLngBounds(
           $.jMapping.makeGLatLng(places_data[0].point), 
           $.jMapping.makeGLatLng(places_data[0].point) );
@@ -185,6 +188,7 @@ if (GMap2){
           getPlaces: getPlaces,
           update: function(){
             if ($(document).trigger('beforeUpdate.jMapping', [this])  != false){
+              
               init(true);
               this.map = map;
               this.gmarkers = gmarkers;
