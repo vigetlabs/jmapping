@@ -134,6 +134,7 @@ These are options that can be passed to the `jMapping` function to change specif
     2. A GIcon, this will be used as the icon for the GMarker object.
     3. An object that has [valid options for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
     If you use this third you may specify an additional `style` option out of ("Marker", "LabeledMarker",  or "FlatIcon").
+    By default "Marker" style is used.
     These correspond to the types of Marker Icons provided by the MapIconMaker library (see their docs for more detail).
 * `default_zoom_level`:
   * *Default*: *N/A*
