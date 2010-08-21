@@ -201,8 +201,8 @@ Dependencies
 
 * [jQuery 1.3.2](http://docs.jquery.com/Downloading_jQuery)
 * [jQuery Metadata plugin 2.1](http://plugins.jquery.com/project/metadata)
-* [MarkerManager 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/1.1/)
-* [MapIconMaker 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/)
+* [MarkerManager 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/markermanager/1.1/)
+* [MapIconMaker 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/mapiconmaker/1.1/)
 
 
 License
