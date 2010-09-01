@@ -138,7 +138,9 @@ These are options that can be passed to the `jMapping` function to change specif
 * `force_zoom_level`:
   * *Default*: *N/A*
   * This will force the map to **always** be rendered at this zoom level.
-
+* `always_show_markers`:
+  * *Default*: `false`
+  * Set this option to `true` if you wish to display markers on all zoom levels. (Normally, the markers may only be visible on certain zoom levels, depending on the normal bounds and zoom level of the marker data.)
 
 Object API
 -----------
