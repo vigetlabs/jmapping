@@ -1,6 +1,7 @@
 var GMap2, GLatLng, GLatLngBounds, GMarker, MapIconMaker;
-var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP';
+var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP', G_DEFAULT_ICON = 'G_DEFAULT_ICON';
 var GEvent = {};
+var GIcon = function(){this.object_name = 'GIcon';};
 var GSmallMapControl = function(){this.object_name = 'GSmallMapControl';};
 var GSmallZoomControl = function(){this.object_name = 'GSmallZoomControl';};
 var GMapTypeControl = function(){this.object_name = 'GMapTypeControl';};
@@ -47,6 +48,7 @@ Screw.Specifications.mockGMapsUpdate = function(marker_mock){
   gmap_mock.should_receive('getBoundsZoomLevel').exactly('twice').and_return(10);
   gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
   gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
+  gmap_mock.should_receive('checkResize').exactly('once');
   GMap2 = function(){};
   $.extend(GMap2.prototype, gmap_mock);
   

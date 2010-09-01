@@ -37,18 +37,18 @@ Make sure you include the necessary scripts in your page:
     <script type="text/javascript" src="jquery.metadata.js"></script>
     <script type="text/javascript" src="jquery.jmapping.js"></script>
 
-Make sure your HTML has a `div` element for the Google map, and there is a container element with some locations and their data. The data by default is expected to be on the "data" attribute of the location (this can be configured):
+Make sure your HTML has a `div` element for the Google map, and there is a container element with some locations and their data. The data by default is expected to be on the "data-jmapping" attribute of the location (this can be configured):
 
     <div id="map"></div>
     
     <div id="map-side-bar">
-      <div class="map-location" data="{id: 5, point: {lat: 35.925, lng: -79.053}, category: 'Gas'}">
+      <div class="map-location" data-jmapping="{id: 5, point: {lat: 35.925, lng: -79.053}, category: 'Gas'}">
         <a href="#" class="map-link">Some Place</a>
         <div class="info-box">
           <p>Some thing for the info box.</p>
         </div>
       </div>
-      <div class="map-location" data="{id: 8, point: {lat: 35.935, lng: -79.024}, category: 'Food'}">
+      <div class="map-location" data-jmapping="{id: 8, point: {lat: 35.935, lng: -79.024}, category: 'Food'}">
         <a href="#" class="map-link">Another Place</a>
         <div class="info-box">
           <p>Example Text.</p>
@@ -128,8 +128,14 @@ These are options that can be passed to the `jMapping` function to change specif
     If the setting is set to a function it will call the function and  pass the value for the
     category data to the function, returning the result. This can be used for more complicated logic and for
     using something other then just string data in the category, such as an object with multiple data
-    attributes it's self. The function should return an object with attributes that are 
-    [valid for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
+    attributes it's self.
+    The object values for the associated category key or the function should return one of three data types:
+    1. A string, this will be used to create a default GIcon with the string as the image source.
+    2. A GIcon, this will be used as the icon for the GMarker object.
+    3. An object that has [valid options for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
+    If you use this third you may specify an additional `style` option out of ("Marker", "LabeledMarker",  or "FlatIcon").
+    By default "Marker" style is used.
+    These correspond to the types of Marker Icons provided by the MapIconMaker library (see their docs for more detail).
 * `default_zoom_level`:
   * *Default*: *N/A*
   * Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.
@@ -195,12 +201,12 @@ Dependencies
 
 * [jQuery 1.3.2](http://docs.jquery.com/Downloading_jQuery)
 * [jQuery Metadata plugin 2.1](http://plugins.jquery.com/project/metadata)
-* [MarkerManager 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/1.1/)
-* [MapIconMaker 1.1](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/)
+* [MarkerManager 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/markermanager/1.1/)
+* [MapIconMaker 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/mapiconmaker/1.1/)
 
 
 License
 --------
 
-Copyright (c) 2009 Brian Landau (Viget Labs)  
+Copyright (c) 2009-2010 Brian Landau (Viget Labs)  
 MIT License: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
