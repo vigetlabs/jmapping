@@ -139,7 +139,9 @@ These are options that can be passed to the `jMapping` function to change specif
 * `default_zoom_level`:
   * *Default*: *N/A*
   * Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.
-
+* `always_show_markers`:
+* *Default*: `false`
+  * Set this option to `true` if you wish to display markers on all zoom levels. (Normally, the markers may only be visible on certain zoom levels, depending on the normal bounds and zoom level of the marker data.)
 
 Object API
 -----------

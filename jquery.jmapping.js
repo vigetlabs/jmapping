@@ -54,7 +54,11 @@ if (GMap2){
         });
 
         bounds_zoom_level = map.getBoundsZoomLevel(bounds);
-        min_zoom = (bounds_zoom_level < 7) ? 0 : (bounds_zoom_level - 7);
+        if (settings.always_show_markers === true) {
+          min_zoom = 0;
+        } else {
+          min_zoom = (bounds_zoom_level < 7) ? 0 : (bounds_zoom_level - 7);
+        }
         markerManager.addMarkers(gmarkersArray(), min_zoom);
         markerManager.refresh();
 
