@@ -92,10 +92,16 @@ if (GMap2){
       };
       
       var getBounds = function(doUpdate){
+        var newBounds, swPoint, nePoint;
         var places_data = getPlacesData(doUpdate);
-        var newBounds = new GLatLngBounds(
-          $.jMapping.makeGLatLng(places_data[0].point), 
-          $.jMapping.makeGLatLng(places_data[0].point) );
+        if(places_data.length){
+          nePoint = swPoint = places_data[0].point;
+        }else{
+          nePoint = swPoint = settings.default_point;
+        }
+        newBounds = new GLatLngBounds(
+            $.jMapping.makeGLatLng(swPoint),
+            $.jMapping.makeGLatLng(nePoint) );
 
         for (var i=1, len = places_data.length ; i<len; i++) {
           newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
@@ -224,6 +230,7 @@ if (GMap2){
       link_selector: 'a.map-link',
       info_window_selector: '.info-box',
       info_window_max_width: 425,
+      default_point: {lat: 0.0, lng: 0.0},
       metadata_options: {type: 'attr', name: 'data-jmapping'}
     },
     makeGLatLng: function(place_point){

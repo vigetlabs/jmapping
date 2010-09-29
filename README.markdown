@@ -101,6 +101,9 @@ These are options that can be passed to the `jMapping` function to change specif
   * This selector defines where the content for the Google Maps info window for each location marker is.
     This element will be searched for inside of the location elements specified in the `location_selector`.
     If no element is found no Info Window will be attached to the marker.
+* `default_point`:
+  * *Default*: `{lat: 0.0, lng: 0.0}`
+  * This point determines the Google Maps location if there are no location elements inside the specified `location_selector`.
 * `metadata_options`:
   * *Default*: `{type: "attr", name: "data"}`
   * This is the set of options passed to the jQuery metadata function. It defines how the necessary
