@@ -1,79 +1,77 @@
-var GMap2, GLatLng, GLatLngBounds, GMarker, MapIconMaker;
-var G_NORMAL_MAP = 'G_NORMAL_MAP', G_HYBRID_MAP = 'G_HYBRID_MAP', G_DEFAULT_ICON = 'G_DEFAULT_ICON';
-var GEvent = {};
-var GIcon = function(){this.object_name = 'GIcon';};
-var GSmallMapControl = function(){this.object_name = 'GSmallMapControl';};
-var GSmallZoomControl = function(){this.object_name = 'GSmallZoomControl';};
-var GMapTypeControl = function(){this.object_name = 'GMapTypeControl';};
-function GBrowserIsCompatible(){return true;}
+var google = {
+  maps: {
+    Map: function(){},
+    event: {},
+    NavigationControlStyle: {
+      SMALL: 'SMALL', DEFAULT: 'DEFAULT'
+    },
+    MapTypeId: {
+      ROADMAP: 'ROADMAP', HYBRID: 'HYBRID'
+    },
+    LatLngBounds: function(){},
+    LatLng: function(){},
+    Marker: function(){},
+    InfoWindow: function(){}
+  }
+};
 
-Screw.Specifications.mockGMaps = function(marker_mock, gmap_mock_setup){
+Screw.Specifications.mockGMaps = function(gmap_mock_setup){
   // mock out GLatLng
-  GLatLng = Smoke.MockFunction(function(lat, lng){}, 'GLatLng');
-  GLatLng.should_be_invoked().at_least('once');
+  google.maps.LatLng = Smoke.MockFunction(function(lat, lng){}, 'LatLng');
+  google.maps.LatLng.should_be_invoked().at_least('once');
   
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
-  gmap_mock.should_receive('centerAndZoomOnBounds').exactly('once');
-  gmap_mock.should_receive('getBoundsZoomLevel').exactly('once').and_return(10);
+  gmap_mock.should_receive('fitBounds').exactly('once');
   if ($.isFunction(gmap_mock_setup)){
     gmap_mock_setup(gmap_mock);
-  } else {
-    gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
-    gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
   }
-  GMap2 = function(){};
-  $.extend(GMap2.prototype, gmap_mock);
+  $.extend(google.maps.Map.prototype, gmap_mock);
   
   // mock out Bounds
   var bounds_mock = Smoke.Mock();
   bounds_mock.should_receive('extend').exactly('once');
-  GLatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'GLatLngBounds');
-  GLatLngBounds.should_be_invoked().exactly('once');
-  $.extend(GLatLngBounds.prototype, bounds_mock);
+  google.maps.LatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'LatLngBounds');
+  google.maps.LatLngBounds.should_be_invoked().exactly('once');
+  $.extend(google.maps.LatLngBounds.prototype, bounds_mock);
   
   // mock out Marker
-  GMarker = Smoke.MockFunction(function(point, options){}, 'GMarker');
-  GMarker.should_be_invoked().exactly('twice');
-  $.extend(GMarker.prototype, marker_mock);
+  google.maps.Marker = Smoke.MockFunction(function(point, options){}, 'Marker');
+  google.maps.Marker.should_be_invoked().exactly('twice');
+  
+  google.maps.event = Smoke.Mock();
+  google.maps.event.should_receive('addListener').at_least('once');
 };
-Screw.Specifications.mockGMapsUpdate = function(marker_mock){
+Screw.Specifications.mockGMapsUpdate = function(){
   // mock out GLatLng
-  GLatLng = Smoke.MockFunction(function(lat, lng){}, 'GLatLng');
-  GLatLng.should_be_invoked().at_least('once');
+  google.maps.LatLng = Smoke.MockFunction(function(lat, lng){}, 'LatLng');
+  google.maps.LatLng.should_be_invoked().at_least('once');
   
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
-  gmap_mock.should_receive('centerAndZoomOnBounds').exactly('twice');
-  gmap_mock.should_receive('getBoundsZoomLevel').exactly('twice').and_return(10);
-  gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_NORMAL_MAP);
-  gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallMapControl());
-  gmap_mock.should_receive('checkResize').exactly('once');
-  GMap2 = function(){};
-  $.extend(GMap2.prototype, gmap_mock);
+  gmap_mock.should_receive('fitBounds').exactly('twice');
+  $.extend(google.maps.Map.prototype, gmap_mock);
   
   // mock out Bounds
   var bounds_mock = Smoke.Mock();
   bounds_mock.should_receive('extend').exactly('twice');
-  GLatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'GLatLngBounds');
-  GLatLngBounds.should_be_invoked().exactly('twice');
-  $.extend(GLatLngBounds.prototype, bounds_mock);
+  google.maps.LatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'LatLngBounds');
+  google.maps.LatLngBounds.should_be_invoked().exactly('twice');
+  $.extend(google.maps.LatLngBounds.prototype, bounds_mock);
   
   // mock out Marker
-  GMarker = Smoke.MockFunction(function(point, options){}, 'GMarker');
-  GMarker.should_be_invoked().exactly(4, 'times');
-  $.extend(GMarker.prototype, marker_mock);
+  google.maps.Marker = Smoke.MockFunction(function(point, options){}, 'Marker');
+  google.maps.Marker.should_be_invoked().exactly(4, 'times');
+  
+  google.maps.event = Smoke.Mock();
+  google.maps.event.should_receive('trigger').exactly('once').with_arguments(google.maps.Map.prototype, 'resize');
+  google.maps.event.should_receive('addListener').at_least('once');
 };
 
 Screw.Specifications.mockMarkerManager = function(update){
   var markermanager_mock = Smoke.Mock();
   if (update){
     markermanager_mock.should_receive('clearMarkers').exactly('once');
-    markermanager_mock.should_receive('addMarkers').exactly('twice');
-    markermanager_mock.should_receive('refresh').exactly('twice');
-  } else {
-    markermanager_mock.should_receive('addMarkers').exactly('once');
-    markermanager_mock.should_receive('refresh').exactly('once');
   }
   
   MarkerManager =  Smoke.MockFunction(function(map, options){}, 'MarkerManager');
