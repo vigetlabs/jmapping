@@ -29,7 +29,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should have 2 GMarkers", function(){
@@ -202,7 +202,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
       $('#map-side-bar').html(old_html);
     });
     
@@ -262,8 +262,9 @@ Screw.Unit(function(){
       });
       
       it("should trigger the GEvent function", function(){
-        google.maps.event.should_receive('trigger').exactly('once')
-           .with_arguments($('#map').data('jMapping').gmarkers[22], 'click');
+        delete google.maps.event._expectations;
+        google.maps.event = mock();
+        google.maps.event.should_receive('trigger').exactly('once').with_arguments($('#map').data('jMapping').gmarkers[22], 'click');
         
         $('#map-side-bar .map-location a.map-link#location22').trigger('click');
       });
@@ -371,7 +372,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
@@ -414,7 +415,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
@@ -447,7 +448,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
@@ -480,7 +481,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){

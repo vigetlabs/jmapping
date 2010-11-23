@@ -146,7 +146,7 @@
           settings.location_selector, 
           settings.link_selector
         ].join(' ');
-
+        
         $(location_link_selector).live('click', function(e){
           e.preventDefault();
           var marker_index = parseInt($(this).attr('href').split('#')[1], 10);
