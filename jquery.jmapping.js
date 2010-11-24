@@ -98,16 +98,14 @@
       
       var getBounds = function(doUpdate){
         var places_data = getPlacesData(doUpdate),
-            newBounds, swPoint, nePoint;
+            newBounds, initialPoint;
         
-        if(places_data.length){
-          nePoint = swPoint = places_data[0].point;
+        if (places_data.length){
+          initialPoint = $.jMapping.makeGLatLng(places_data[0].point);
         }else{
-          nePoint = swPoint = settings.default_point;
+          initialPoint = $.jMapping.makeGLatLng(settings.default_point);
         }
-        newBounds = new google.maps.LatLngBounds(
-            $.jMapping.makeGLatLng(swPoint),
-            $.jMapping.makeGLatLng(nePoint) );
+        newBounds = new google.maps.LatLngBounds(initialPoint, initialPoint);
 
         for (var i=1, len = places_data.length; i<len; i++) {
           newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
