@@ -198,7 +198,7 @@ There a number of events that fire as jMapping is used.
 Dependencies
 -------------
 
-* [jQuery 1.3.2](http://docs.jquery.com/Downloading_jQuery)
+* [jQuery 1.4.4](http://docs.jquery.com/Downloading_jQuery)
 * [jQuery Metadata plugin 2.1](http://plugins.jquery.com/project/metadata)
 * [MarkerManager v3 1.0](http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0)
 * [StyledMarker 0.5](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker)
