@@ -51,13 +51,20 @@
           }
           $(document).trigger('markerCreated.jMapping', [marker]);
         });
-
-        google.maps.event.addListener(markerManager, 'loaded', function(){
+        
+        if (doUpdate){
           zoom_level = map.getZoom();
           min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
           markerManager.addMarkers(gmarkersArray(), min_zoom);
           markerManager.refresh();
-        });
+        } else {
+          google.maps.event.addListener(markerManager, 'loaded', function(){
+            zoom_level = map.getZoom();
+            min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
+            markerManager.addMarkers(gmarkersArray(), min_zoom);
+            markerManager.refresh();
+          }); 
+        }
 
         if (!(settings.link_selector === false) && !doUpdate){
           attachMapsEventToLinks();
@@ -72,6 +79,7 @@
             navigationControlOptions: {
               style: google.maps.NavigationControlStyle.SMALL
             },
+            mapTypeControl: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoom: settings.default_zoom_level
           });
