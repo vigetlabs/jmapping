@@ -1,3 +1,9 @@
+== 2.0.0 / 2010-11-24
+* Use version 3 of Google Maps API
+* Add `default_point` setting. (gsterndale)
+* Add `force_zoom_level` setting.
+* Use StyledMarker instead of MapIconMaker as MapIconMaker is incompatible with v3 of the Google Maps API.
+
 == 1.4.0 / 2010-07-11
 
 * Uncache metadata on update.
