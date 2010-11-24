@@ -26,14 +26,14 @@ This way the HTML semantically reflects that all of those parts and information 
 Basic Usage
 ------------
 
-[Start by getting a Google Maps API key](http://code.google.com/apis/maps/signup.html).
 Download the necessary dependencies and jMapping.
 
 Make sure you include the necessary scripts in your page:
 
-    <script type="text/javascript" src="http://maps.google.com/maps?file=api&v=2&key=someapikey"></script>
-    <script type="text/javascript" src="mapiconmaker.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.3&amp;sensor=false"></script>
+    <script type="text/javascript" src="markermanager.js"></script>
+    <script type="text/javascript" src="StyledMarker.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script type="text/javascript" src="jquery.metadata.js"></script>
     <script type="text/javascript" src="jquery.jmapping.js"></script>
 
@@ -112,15 +112,11 @@ These are options that can be passed to the `jMapping` function to change specif
     Otherwise it will expand to fit the width of the content.
 * `map_config`:
   * *Default*: *N/A*
-  * This can be set to a function that will accept the Google maps object as it's only parameter.
-    The function can be used to set the map type or add controls or perform any other functions you
-    want to do on the map object before the markers are placed on it.  
-    If this option is not set the map type will be `G_NORMAL_MAP` and only the `GSmallMapControl`
-    control will be added.
+  * This can be set to a [MapOptions object](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions). Which is just a normal object `{}` with specific properties that become the settings for the map.
 * `category_icon_options`:
   * *Default*: *N/A*
   * By default the plugin will use the default Google Maps marker icon. But you can use this option
-    to specify what options to pass to the MapIconMaker based on category data associated with the location.
+    to specify what options to pass to the StyledMarker based on category data associated with the location.
     It accepts 2 types of values: an object or a function.  
     If the setting is to an object it will take the category data on the location and look for a key on the object
     that matches and return that value. If there is no value for the supplied category, it will return
@@ -130,15 +126,15 @@ These are options that can be passed to the `jMapping` function to change specif
     using something other then just string data in the category, such as an object with multiple data
     attributes it's self.
     The object values for the associated category key or the function should return one of three data types:
-    1. A string, this will be used to create a default GIcon with the string as the image source.
-    2. A GIcon, this will be used as the icon for the GMarker object.
-    3. An object that has [valid options for a MarkerIconOptions object](http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html).
-    If you use this third you may specify an additional `style` option out of ("Marker", "LabeledMarker",  or "FlatIcon").
-    By default "Marker" style is used.
-    These correspond to the types of Marker Icons provided by the MapIconMaker library (see their docs for more detail).
+    1. A string, this will be used as the image source for the marker icon.
+    2. A [google.maps.MarkerImage](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerImage), this will be used as the icon for the Marker object.
+    3. An object that has [valid options for a StyledIcon object](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/docs/reference.html#StyledIconOptions).
 * `default_zoom_level`:
-  * *Default*: *N/A*
+  * *Default*: `9`
   * Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.
+* `force_zoom_level`:
+  * *Default*: *N/A*
+  * This will force the map to **always** be rendered at this zoom level.
 
 
 Object API
@@ -155,20 +151,20 @@ For example:
 The API of that object:
 
 * `gmarkers`:
-  * The GMarker objects that have been placed on the map.
+  * The google.maps.Marker objects that have been placed on the map.
     Stored in an object where the keys are the id's are those provided in the metadata
 * `settings`:
   * The settings for this jMapping instance.
 * `mapped`:
   * Did the plugin create the map and markers as expected or not.
 * `map`:
-  * the GMap2 Google Map API object.
+  * the google.maps.Map Google Map API object.
 * `markerManager`:
   * The Google Maps MarkerManager object for manipulating groups of markers, has control over all markers on the map.
 * `gmarkersArray`:
   * Returns an array of all the markers currently on the map.
 * `getBounds`:
-  * The Google Maps GLatLngBounds bounds object for all the markers on the map.
+  * The Google Maps google.maps.LatLngBounds bounds object for all the markers on the map.
 * `getPlaces`:
   * Returns the set of jQuery objects for the place DOM Elements.
 * `getPlacesData`:
@@ -201,8 +197,8 @@ Dependencies
 
 * [jQuery 1.3.2](http://docs.jquery.com/Downloading_jQuery)
 * [jQuery Metadata plugin 2.1](http://plugins.jquery.com/project/metadata)
-* [MarkerManager 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/markermanager/1.1/)
-* [MapIconMaker 1.1](http://gmaps-utility-library-dev.googlecode.com/svn/tags/mapiconmaker/1.1/)
+* [MarkerManager v3 1.0](http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0)
+* [StyledMarker 0.5](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker)
 
 
 License
