@@ -60,6 +60,7 @@ Screw.Specifications.mockGMapsUpdate = function(){
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
   gmap_mock.should_receive('fitBounds').exactly('twice');
+  gmap_mock.should_receive('getZoom').exactly('once').and_return(10);
   $.extend(google.maps.Map.prototype, gmap_mock);
   
   // mock out Bounds
@@ -82,6 +83,8 @@ Screw.Specifications.mockMarkerManager = function(update){
   var markermanager_mock = Smoke.Mock();
   if (update){
     markermanager_mock.should_receive('clearMarkers').exactly('once');
+    markermanager_mock.should_receive('addMarkers').exactly('once');
+    markermanager_mock.should_receive('refresh').exactly('once');
   }
   
   MarkerManager =  Smoke.MockFunction(function(map, options){}, 'MarkerManager');

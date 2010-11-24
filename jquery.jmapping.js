@@ -53,16 +53,10 @@
         });
         
         if (doUpdate){
-          zoom_level = map.getZoom();
-          min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
-          markerManager.addMarkers(gmarkersArray(), min_zoom);
-          markerManager.refresh();
+          updateMarkerManager();
         } else {
           google.maps.event.addListener(markerManager, 'loaded', function(){
-            zoom_level = map.getZoom();
-            min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
-            markerManager.addMarkers(gmarkersArray(), min_zoom);
-            markerManager.refresh();
+            updateMarkerManager();
           }); 
         }
 
@@ -195,6 +189,13 @@
 
         gmarkers[parseInt(place_data.id, 10)] = marker;
         return marker;
+      };
+      
+      var updateMarkerManager = function(){
+        zoom_level = map.getZoom();
+        min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
+        markerManager.addMarkers(gmarkersArray(), min_zoom);
+        markerManager.refresh();
       };
       
       var attachMapsEventToLinks = function(){
