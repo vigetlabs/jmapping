@@ -23,7 +23,7 @@ Rake::PackageTask.new("jquery.jmapping", (ENV['VERSION'] || :noversion)) do |p|
   p.need_tar_gz = true
   p.need_zip = true
   p.package_files.add 'jquery.*.js', 'README.markdown', 'CHANGELOG', 'vendor/jquery.metadata.js',
-    'vendor/mapiconmaker.js', 'vendor/markermanager.js'
+    'vendor/StyledMarker.js', 'vendor/markermanager.js'
 end
 
 if PLATFORM['darwin']
