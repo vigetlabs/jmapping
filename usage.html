@@ -26,9 +26,10 @@
     <div id="content">
       <p><a href="http://code.google.com/apis/maps/signup.html">Start by getting a Google Maps API key</a>. Download the necessary dependencies and jMapping.</p>
       <p>Make sure you include the necessary scripts in your page:</p>
-<pre><code>&lt;script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=YOURAPIKEY"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="mapiconmaker.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"&gt;&lt;/script&gt;
+<pre><code>&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.3&amp;sensor=false"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="markermanager.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="StyledMarker.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="jquery.metadata.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="jquery.jmapping.js"&gt;&lt;/script&gt;
 </code></pre>
@@ -105,6 +106,11 @@
           <td class="default"><code>".info-box"</code></td>
         </tr>
         <tr>
+          <td class="name"><code>default_point</code></td>
+          <td class="description">This point determines the Google Maps location if there are no location elements inside the specified <code>location_selector</code>.</td>
+          <td class="default"><code>{lat: 0.0, lng: 0.0}</code></td>
+        </tr>
+        <tr>
           <td class="name"><code>metadata_options</code></td>
           <td class="description">This is the set of options passed to the jQuery metadata function. It defines how the necessary metadata for each location will be searched for. See the <a href="http://docs.jquery.com/Plugins/Metadata/metadata#toptions">metadata plugins docs</a> for more info.</td>
           <td class="default"><code>{type: "attr", name: "data"}</code></td>
@@ -122,18 +128,28 @@
         </tr>
         <tr>
           <td class="name"><code>category_icon_options</code></td>
-          <td class="description"><p>By default the plugin will use the default Google Maps marker icon. But you can use this option to specify what options to pass to the MapIconMaker based on category data associated with the location. It accepts 2 types of values: an object or a function.</p>
-          <p>If this setting is set to an object it will take the category data on the location and look for a key on the object that matches and return that value. If there is no value for the category, it will return the value specified in the "default" key.</p>
-          <p>If the setting is set to a function it will call the function and pass the value for the category data to the function returning the result. This can be used for more complicated logic and for using something other then just string data in the category, such as an object with multiple data attributes it's self.</p>
+          <td class="description"><p>By default the plugin will use the default Google Maps marker icon. But you can use this option to specify what options to pass to the StyledMarker based on category data associated with the location. It accepts 2 types of values: an object or a function.</p>
+          <p>If the setting is to an object it will take the category data on the location and look for a key on the object that matches and return that value. If there is no value for the supplied category, it will return the value specified in the "default" key.</p>
+          <p>If the setting is set to a function it will call the function and  pass the value for the category data to the function, returning the result. This can be used for more complicated logic and for using something other then just string data in the category, such as an object with multiple data attributes it's self.</p>
           <p>The object values for the associated category key or the function should return one of three data types:</p>
           <ol> 
-            <li>A string, this will be used to create a default GIcon with the string as the image source.</li> 
-            <li>A GIcon, this will be used as the icon for the GMarker object.</li> 
-            <li>An object that has <a href="http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/docs/reference.html">valid options for a MarkerIconOptions object</a>.
-            If you use this third you may specify an additional <code>style</code> option out of ("Marker", "LabeledMarker",  or "FlatIcon").
-            These correspond to the types of Marker Icons provided by the MapIconMaker library (see their docs for more detail).</li> 
+            <li>A string, this will be used as the image source for the marker icon.</li> 
+            <li>A <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerImage">google.maps.MarkerImage</a>, this will be used as the icon for the Marker object.</li> 
+            <li>An object that has <a href="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/docs/reference.html#StyledIconOptions" title="StyledMarker v1.0 Reference">valid options for a StyledIcon object</a>.</li> 
           </ol>
           </td>
+          <td class="default"><em>None</em></td>
+        </tr>
+        <tr>
+          <td class="name"><code>default_zoom_level</code></td>
+          <td class="description">
+            <p>Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.</p>
+          </td>
+          <td class="default"><code>9</code></td>
+        </tr>
+        <tr>
+          <td class="name"><code>force_zoom_level</code></td>
+          <td class="description">This will force the map to <strong>always</strong> be rendered at this zoom level.</td>
           <td class="default"><em>None</em></td>
         </tr>
       </tbody>
