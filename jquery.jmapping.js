@@ -114,16 +114,52 @@
         link.attr('href', ("#" + location_data.id));
       };
       
+      var chooseIconOptions = function(category){
+        if (settings.category_icon_options){
+          if ($.isFunction(settings.category_icon_options)){
+            return settings.category_icon_options(category);
+          } else {
+            return settings.category_icon_options[category] || settings.category_icon_options['default'];
+          }
+        } else {
+          return {};
+        }
+      };
+      
       var createMarker = function(place_elm){
         var $place_elm = $(place_elm), place_data, point, marker, $info_window_elm, 
           info_window;
 
         place_data = $place_elm.metadata(settings.metadata_options);
         point = $.jMapping.makeGLatLng(place_data.point);
-        marker = new google.maps.Marker({
-          position: point,
-          map: map
-        });
+        
+        if (settings.category_icon_options){
+          icon_options = chooseIconOptions(place_data.category);
+          if (typeof icon_options === "string"){
+            marker = new google.maps.Marker({
+              icon: icon_options,
+              position: point,
+              map: map
+            });
+          } else if (icon_options instanceof google.maps.MarkerImage){
+            marker = new google.maps.Marker({
+              icon: icon_options,
+              position: point,
+              map: map
+            });
+          } else {
+            marker = new StyledMarker({
+              styleIcon: new StyledIcon(StyledIconTypes.MARKER, icon_options),
+              position: point,
+              map: map
+            });
+          }
+        } else {
+          marker = new google.maps.Marker({
+            position: point,
+            map: map
+          });
+        }
 
         $info_window_elm = $place_elm.find(settings.info_window_selector);
         if ($info_window_elm.length > 0){

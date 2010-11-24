@@ -11,11 +11,17 @@ var google = {
     LatLngBounds: function(){},
     LatLng: function(){},
     Marker: function(){},
-    InfoWindow: function(){}
+    InfoWindow: function(){},
+    MarkerImage: function(){}
   }
-};
+},
+StyledIconTypes = {
+  MARKER: 'MARKER'
+},
+StyledIcon = function(){},
+StyledMarker = function(){};
 
-Screw.Specifications.mockGMaps = function(gmap_mock_setup){
+Screw.Specifications.mockGMaps = function(custom_markers){
   // mock out GLatLng
   google.maps.LatLng = Smoke.MockFunction(function(lat, lng){}, 'LatLng');
   google.maps.LatLng.should_be_invoked().at_least('once');
@@ -23,9 +29,6 @@ Screw.Specifications.mockGMaps = function(gmap_mock_setup){
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
   gmap_mock.should_receive('fitBounds').exactly('once');
-  if ($.isFunction(gmap_mock_setup)){
-    gmap_mock_setup(gmap_mock);
-  }
   $.extend(google.maps.Map.prototype, gmap_mock);
   
   // mock out Bounds
@@ -36,8 +39,15 @@ Screw.Specifications.mockGMaps = function(gmap_mock_setup){
   $.extend(google.maps.LatLngBounds.prototype, bounds_mock);
   
   // mock out Marker
-  google.maps.Marker = Smoke.MockFunction(function(point, options){}, 'Marker');
-  google.maps.Marker.should_be_invoked().exactly('twice');
+  if (custom_markers){
+    StyledIcon = Smoke.MockFunction(function(options){}, 'StyledIcon');
+    StyledIcon.should_be_invoked().exactly('twice');
+    StyledMarker = Smoke.MockFunction(function(options){}, 'StyledMarker');
+    StyledMarker.should_be_invoked().exactly('twice');
+  } else {
+    google.maps.Marker = Smoke.MockFunction(function(options){}, 'Marker');
+    google.maps.Marker.should_be_invoked().exactly('twice');
+  }
   
   google.maps.event = Smoke.Mock();
   google.maps.event.should_receive('addListener').at_least('once');
@@ -60,7 +70,7 @@ Screw.Specifications.mockGMapsUpdate = function(){
   $.extend(google.maps.LatLngBounds.prototype, bounds_mock);
   
   // mock out Marker
-  google.maps.Marker = Smoke.MockFunction(function(point, options){}, 'Marker');
+  google.maps.Marker = Smoke.MockFunction(function(options){}, 'Marker');
   google.maps.Marker.should_be_invoked().exactly(4, 'times');
   
   google.maps.event = Smoke.Mock();

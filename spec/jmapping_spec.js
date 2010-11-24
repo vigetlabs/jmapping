@@ -355,7 +355,7 @@ Screw.Unit(function(){
     });
   });
   
-  describe("jMapping with no cateogies and 'category_icon_options'", function(){
+  describe("jMapping with no categories and 'category_icon_options'", function(){
     before(function(){
       // mock out Marker
       google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
@@ -366,7 +366,7 @@ Screw.Unit(function(){
         });
       });
       
-      mockGMaps();
+      mockGMaps(true);
       mockMarkerManager();
     });
     after(function(){
@@ -379,7 +379,7 @@ Screw.Unit(function(){
       $('#map').jMapping({
         side_bar_selector: 'ul#map-list', 
         location_selector: 'li.location',
-        category_icon_options: {'fun': {primaryColor: '#33FFFF'}, 'default': {primaryColor: '#CC0000'}},
+        category_icon_options: {'fun': {color: '#33FFFF'}, 'default': {color: '#CC0000'}},
         metadata_options: {type: 'html5'}
       });
       expect($('#map').data('jMapping')).to(be_true);
@@ -398,16 +398,16 @@ Screw.Unit(function(){
         });
       });
       
-      mockGMaps();
+      mockGMaps(true);
       mockMarkerManager();
       
       category_function = mock_function(function(category){
         if (category.charAt(0).match(/[a-m]/i)){
-          return {primaryColor: '#CC0000'};
+          return {color: '#CC0000'};
         } else if (category.charAt(0).match(/[n-z]/i)){
-          return {primaryColor: '#33FFFF'};
+          return {color: '#33FFFF'};
         } else {
-          return {primaryColor: '#00FFCC'};
+          return {color: '#00FFCC'};
         }
       }, 'category_icon_options_function');
       category_function.should_be_invoked().exactly('twice');
@@ -459,7 +459,7 @@ Screw.Unit(function(){
     });
   });
   
-  describe("setting a function to category_icon_options that returns a GIcon", function(){
+  describe("setting a function to category_icon_options that returns a MarkerImage", function(){
     var category_function;
     before(function(){
       google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
@@ -474,7 +474,7 @@ Screw.Unit(function(){
       mockMarkerManager();
       
       category_function = mock_function(function(category){
-        return 'GIcon';
+        return new google.maps.MarkerImage('/images/map_icons/icon1.jpg');
       }, 'category_icon_options_function');
       category_function.should_be_invoked().exactly('twice');
     });
