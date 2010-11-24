@@ -98,9 +98,16 @@
       
       var getBounds = function(doUpdate){
         var places_data = getPlacesData(doUpdate),
-            newBounds = new google.maps.LatLngBounds(
-          $.jMapping.makeGLatLng(places_data[0].point), 
-          $.jMapping.makeGLatLng(places_data[0].point) );
+            newBounds, swPoint, nePoint;
+        
+        if(places_data.length){
+          nePoint = swPoint = places_data[0].point;
+        }else{
+          nePoint = swPoint = settings.default_point;
+        }
+        newBounds = new GLatLngBounds(
+            $.jMapping.makeGLatLng(swPoint),
+            $.jMapping.makeGLatLng(nePoint) );
 
         for (var i=1, len = places_data.length; i<len; i++) {
           newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
@@ -247,6 +254,7 @@
       link_selector: 'a.map-link',
       info_window_selector: '.info-box',
       info_window_max_width: 425,
+      default_point: {lat: 0.0, lng: 0.0},
       metadata_options: {type: 'attr', name: 'data-jmapping'},
       default_zoom_level: 9
     },

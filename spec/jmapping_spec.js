@@ -271,6 +271,18 @@ Screw.Unit(function(){
     });
   });
   
+  describe("jMapping with no location items", function(){
+    after(function(){
+      $('#map').data('jMapping', null);
+    });
+    it("should function correctly", function(){
+      $('#map').jMapping({
+        side_bar_selector: 'ul#empty-map-side-bar',
+      });
+      expect($('#map').data('jMapping')).to(be_true);
+    });
+  });
+
   describe("jMapping with options", function(){
     before(function(){
       // mock out Marker
