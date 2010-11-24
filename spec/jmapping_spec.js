@@ -272,12 +272,31 @@ Screw.Unit(function(){
   });
   
   describe("jMapping with no location items", function(){
+    before(function(){
+      // mock out GLatLng
+      google.maps.LatLng = Smoke.MockFunction(function(lat, lng){}, 'LatLng');
+      google.maps.LatLng.should_be_invoked().at_least('once');
+
+      // mock out GMap2
+      var gmap_mock = Smoke.Mock();
+      gmap_mock.should_receive('fitBounds').exactly('once');
+      $.extend(google.maps.Map.prototype, gmap_mock);
+
+      // mock out Bounds
+      google.maps.LatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'LatLngBounds');
+      google.maps.LatLngBounds.should_be_invoked().exactly('once');
+      
+      google.maps.event = Smoke.Mock();
+      google.maps.event.should_receive('addListener').at_least('once');
+      
+      mockMarkerManager();
+    });
     after(function(){
       $('#map').data('jMapping', null);
     });
     it("should function correctly", function(){
       $('#map').jMapping({
-        side_bar_selector: 'ul#empty-map-side-bar',
+        side_bar_selector: 'ul#empty-map-side-bar'
       });
       expect($('#map').data('jMapping')).to(be_true);
     });
