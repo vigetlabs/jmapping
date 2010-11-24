@@ -105,7 +105,7 @@
         }else{
           nePoint = swPoint = settings.default_point;
         }
-        newBounds = new GLatLngBounds(
+        newBounds = new google.maps.LatLngBounds(
             $.jMapping.makeGLatLng(swPoint),
             $.jMapping.makeGLatLng(nePoint) );
 
