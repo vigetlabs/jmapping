@@ -8,13 +8,14 @@
 
 (function($){
   $.jMapping = function(map_elm, options){
-    var settings, gmarkers, mapped, map, markerManager, places, bounds, jMapper;
+    var settings, gmarkers, mapped, map, markerManager, places, bounds, jMapper, info_windows;
     map_elm = (typeof map_elm == "string") ? $(map_elm).get(0) : map_elm;
     
     if (!($(map_elm).data('jMapping'))){ // TODO: Should we use a different test here?
       settings = $.extend(true, {}, $.jMapping.defaults);
       $.extend(true, settings, options);
       gmarkers = {};
+      info_windows = [];
       
       var init = function(doUpdate){
         var info_window_selector, min_zoom, zoom_level;
@@ -31,6 +32,7 @@
 
         if (doUpdate){
           gmarkers = {};
+          info_windows = [];
           markerManager.clearMarkers();
           google.maps.event.trigger(map, 'resize');
           map.fitBounds(bounds);
@@ -167,7 +169,13 @@
               content: $info_window_elm.html(),
               maxWidth: settings.info_window_max_width 
           });
+          info_windows.push(info_window);
           google.maps.event.addListener(marker, 'click', function() {
+            $.each(info_windows, function(index, iwindow){
+              if (info_window != iwindow){
+                iwindow.close();
+              }
+            });
             info_window.open(map, marker);
           });
         }
