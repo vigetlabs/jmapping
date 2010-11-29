@@ -144,13 +144,7 @@
         
         if (settings.category_icon_options){
           icon_options = chooseIconOptions(place_data.category);
-          if (typeof icon_options === "string"){
-            marker = new google.maps.Marker({
-              icon: icon_options,
-              position: point,
-              map: map
-            });
-          } else if (icon_options instanceof google.maps.MarkerImage){
+          if ((typeof icon_options === "string") || (icon_options instanceof google.maps.MarkerImage)){
             marker = new google.maps.Marker({
               icon: icon_options,
               position: point,
