@@ -138,9 +138,15 @@ These are options that can be passed to the `jMapping` function to change specif
 * `force_zoom_level`:
   * *Default*: *N/A*
   * This will force the map to **always** be rendered at this zoom level.
+* `marker_max_zoom`:
+  * *Default*: `null`
+  * Use this option to set the maximum zoom level for your markers. If you zoom in beyond this level, Markers will not be visible. If a null value is used, the maximum map zoom level will be assumed.
+* `marker_min_zoom`:
+  * *Default*: `9`
+  * Use this option to set the minimum zoom level for your markers. If you zoom out beyond this level, Markers will not be visible.
 * `always_show_markers`:
   * *Default*: `false`
-  * Set this option to `true` if you wish to display markers on all zoom levels. (Normally, the markers may only be visible on certain zoom levels, depending on the normal bounds and zoom level of the marker data.)
+  * Set this option to `true` to display markers on all zoom levels and override the `marker_min_zoom` and `marker_max_zoom` values.
 
 Object API
 -----------

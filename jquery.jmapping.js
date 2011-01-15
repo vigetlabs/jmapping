@@ -191,11 +191,12 @@
       var updateMarkerManager = function(){
         if (settings.always_show_markers === true) {
           min_zoom = 0;
+          max_zoom = null;
         } else {
-          zoom_level = map.getZoom();
-          min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
+          min_zoom = settings.marker_min_zoom;
+          max_zoom = settings.marker_max_zoom;
         }
-        markerManager.addMarkers(gmarkersArray(), min_zoom);
+        markerManager.addMarkers(gmarkersArray(), min_zoom, max_zoom);
         markerManager.refresh();
         if (settings.force_zoom_level){
           map.setZoom(settings.force_zoom_level);
@@ -266,7 +267,9 @@
       info_window_selector: '.info-box',
       info_window_max_width: 425,
       default_point: {lat: 0.0, lng: 0.0},
-      metadata_options: {type: 'attr', name: 'data-jmapping'}
+      metadata_options: {type: 'attr', name: 'data-jmapping'},
+      marker_max_zoom: null,
+      marker_min_zoom: 9
     },
     makeGLatLng: function(place_point){
       return new google.maps.LatLng(place_point.lat, place_point.lng);
