@@ -1,2 +1,8 @@
 pkg/*
 pkg/**/*
+*.swp
+*.swo
+*.scratch.*
+.DS_Store
+.bundle
+.rvmrc
