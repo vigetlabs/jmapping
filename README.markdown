@@ -133,7 +133,7 @@ These are options that can be passed to the `jMapping` function to change specif
     2. A [google.maps.MarkerImage](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerImage), this will be used as the icon for the Marker object.
     3. An object that has [valid options for a StyledIcon object](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/docs/reference.html#StyledIconOptions).
 * `default_zoom_level`:
-  * *Default*: `9`
+  * *Default*: *N/A*
   * Use this option to set the default zoom level for your map. Normally, zoom level is set dynamically based on the position of locations being mapped. But, in some cases, like viewing a single mapped location, you may wish to set a default zoom level. Zoom level values should be between 1 and 20. Neighborhood level is approximately 15.
 * `force_zoom_level`:
   * *Default*: *N/A*

@@ -57,6 +57,9 @@
         } else {
           google.maps.event.addListener(markerManager, 'loaded', function(){
             updateMarkerManager();
+            if (settings.default_zoom_level){
+              map.setZoom(settings.default_zoom_level);
+            }
           }); 
         }
 
@@ -75,7 +78,7 @@
             },
             mapTypeControl: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            zoom: settings.default_zoom_level
+            zoom: 9
           });
         }
         map.fitBounds(bounds);
@@ -190,6 +193,9 @@
         min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
         markerManager.addMarkers(gmarkersArray(), min_zoom);
         markerManager.refresh();
+        if (settings.force_zoom_level){
+          map.setZoom(settings.force_zoom_level);
+        }
       };
       
       var attachMapsEventToLinks = function(){
@@ -256,8 +262,7 @@
       info_window_selector: '.info-box',
       info_window_max_width: 425,
       default_point: {lat: 0.0, lng: 0.0},
-      metadata_options: {type: 'attr', name: 'data-jmapping'},
-      default_zoom_level: 9
+      metadata_options: {type: 'attr', name: 'data-jmapping'}
     },
     makeGLatLng: function(place_point){
       return new google.maps.LatLng(place_point.lat, place_point.lng);
