@@ -1,5 +1,5 @@
 /*
- * jMapping v2.0.0 - jQuery plugin for creating Google Maps
+ * jMapping v2.1.0 - jQuery plugin for creating Google Maps
  *
  * Copyright (c) 2009-2010 Brian Landau (Viget Labs)
  * MIT License: http://www.opensource.org/licenses/mit-license.php
@@ -189,8 +189,12 @@
       };
       
       var updateMarkerManager = function(){
-        zoom_level = map.getZoom();
-        min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
+        if (settings.always_show_markers === true) {
+          min_zoom = 0;
+        } else {
+          zoom_level = map.getZoom();
+          min_zoom = (zoom_level < 7) ? 0 : (zoom_level - 7);
+        }
         markerManager.addMarkers(gmarkersArray(), min_zoom);
         markerManager.refresh();
         if (settings.force_zoom_level){
