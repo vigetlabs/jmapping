@@ -1,3 +1,7 @@
+== 2.1.0 / 2011-01-28
+* Fixed `force_zoom_level` & `default_zoom_level`
+* Add `always_show_markers` option (mokolabs)
+
 == 2.0.0 / 2010-11-24
 * Use version 3 of Google Maps API
 * Add `default_point` setting. (gsterndale)

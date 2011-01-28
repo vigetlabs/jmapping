@@ -209,5 +209,5 @@ Dependencies
 License
 --------
 
-Copyright (c) 2009-2010 Brian Landau (Viget Labs)  
+Copyright (c) 2009-2011 Brian Landau (Viget Labs)  
 MIT License: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
