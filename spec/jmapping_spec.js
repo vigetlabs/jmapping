@@ -2,8 +2,8 @@ Screw.Unit(function(){
   
   describe("makeGLatLng", function(){
     before(function(){
-      GLatLng = mock_function(function(lat, lng){}, 'GLatLng');
-      GLatLng.should_be_invoked().exactly('once').with_arguments(70, 50);
+      google.maps.LatLng = mock_function(function(lat, lng){}, 'GLatLng');
+      google.maps.LatLng.should_be_invoked().exactly('once').with_arguments(70, 50);
     });
     
     it("should be invoked", function(){
@@ -14,22 +14,22 @@ Screw.Unit(function(){
   describe("jMapping", function(){
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
+      
       $('#map-side-bar .map-location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
       
-      mockGMaps(marker_mock);
+      mockGMaps();
       mockMarkerManager();
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly(0, 'times');
     });
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should have 2 GMarkers", function(){
@@ -95,7 +95,7 @@ Screw.Unit(function(){
       
       it("should have a map GMap2 object", function(){
         expect(typeof jMapper.map).to(equal, 'object');
-        expect(jMapper.map instanceof GMap2).to(be_true);
+        expect(jMapper.map instanceof google.maps.Map).to(be_true);
       });
       
       it("should have a markerManager MarkerManager object", function(){
@@ -105,7 +105,7 @@ Screw.Unit(function(){
       
       it("should have a gmarkersArray method that returns an array of markers", function(){
         expect($.isFunction(jMapper.gmarkersArray)).to(be_true);
-        expect(jMapper.gmarkersArray()[0] instanceof GMarker).to(be_true);
+        expect(jMapper.gmarkersArray()[0] instanceof google.maps.Marker).to(be_true);
       });
       
       it("should have a getBounds method", function(){
@@ -131,8 +131,8 @@ Screw.Unit(function(){
         $('#map').jMapping({link_selector: false});
       });
       after(function(){
-        delete GEvent._expectations;
-        GEvent = {};
+        delete google.maps.event._expectations;
+        google.maps.event = {};
       });
       
       it("should not change the links url", function(){
@@ -140,9 +140,9 @@ Screw.Unit(function(){
         expect($('#map-side-bar .map-location a.map-link#location8').attr('href')).to_not(equal, '#8');
       });
       
-      it("should not tigger the GEvent function", function(){
-        GEvent = mock();
-        GEvent.should_receive('trigger').exactly(0, 'times');
+      it("should not trigger the GEvent function", function(){
+        google.maps.event.should_receive('trigger').exactly(0, 'times')
+          .with_arguments($('#map').data('jMapping').gmarkers[5], 'click');
         
         $('#map-side-bar .map-location a.map-link#location5').trigger('click');
       });
@@ -153,13 +153,13 @@ Screw.Unit(function(){
         $('#map').jMapping();
       });
       after(function(){
-        delete GEvent._expectations;
-        GEvent = {};
+        delete google.maps.event._expectations;
+        google.maps.event = {};
       });
       
       it("should trigger the GEvent function", function(){
-        GEvent = mock();
-        GEvent.should_receive('trigger').exactly('once');
+        google.maps.event.should_receive('trigger').exactly('once')
+           .with_arguments($('#map').data('jMapping').gmarkers[5], 'click');
         
         $('#map-side-bar .map-location a.map-link#location5').trigger('click');
       });
@@ -167,37 +167,42 @@ Screw.Unit(function(){
   });
   
   describe('jMapping with update', function(){
-    var update_html = '<div class="map-location" data="{id: 22, point: {lat: 72, lng: 75}, category: \'bogus\'}">'+
+    var update_html = '<div class="map-location" data-jmapping="{id: 22, point: {lat: 72, lng: 75}, category: \'bogus\'}">'+
 '      <a href="#" id="location22" class="map-link">Some New Place</a>'+
 '      <div class="info-box"><p>Test Text.</p></div>'+
 '    </div>'+
-'    <div class="map-location" data="{id: 28, point: {lat: 78, lng: 73}, category: \'sample\'}">'+
+'    <div class="map-location" data-jmapping="{id: 28, point: {lat: 78, lng: 73}, category: \'sample\'}">'+
 '      <a href="#" id="location28" class="map-link">Another Cool New Place</a>'+
 '      <div class="info-box"><p>New Text.</p></div>'+
 '    </div>';
     var old_html;
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('#map-side-bar .map-location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
-      marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments('<p>Test Text.</p>', {maxWidth: 425});
-      marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments('<p>New Text.</p>', {maxWidth: 425});
+      google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+        content: '<p>Test Text.</p>',
+        maxWidth: 425
+      });
+      google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+        content: '<p>New Text.</p>',
+        maxWidth: 425
+      });
       
-      mockGMapsUpdate(marker_mock);
+      mockGMapsUpdate();
       mockMarkerManager(true);
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly(0, 'times');
       
       old_html = $('#map-side-bar').html();
     });
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
       $('#map-side-bar').html(old_html);
     });
     
@@ -252,42 +257,71 @@ Screw.Unit(function(){
         $('#map').data('jMapping').update();
       });
       after(function(){
-        delete GEvent._expectations;
-        GEvent = {};
+        delete google.maps.event._expectations;
+        google.maps.event = {};
       });
       
       it("should trigger the GEvent function", function(){
-        GEvent = mock();
-        GEvent.should_receive('trigger').exactly('once');
+        delete google.maps.event._expectations;
+        google.maps.event = mock();
+        google.maps.event.should_receive('trigger').exactly('once').with_arguments($('#map').data('jMapping').gmarkers[22], 'click');
         
         $('#map-side-bar .map-location a.map-link#location22').trigger('click');
       });
     });
   });
   
+  describe("jMapping with no location items", function(){
+    before(function(){
+      // mock out GLatLng
+      google.maps.LatLng = Smoke.MockFunction(function(lat, lng){}, 'LatLng');
+      google.maps.LatLng.should_be_invoked().at_least('once');
+
+      // mock out GMap2
+      var gmap_mock = Smoke.Mock();
+      gmap_mock.should_receive('fitBounds').exactly('once');
+      $.extend(google.maps.Map.prototype, gmap_mock);
+
+      // mock out Bounds
+      google.maps.LatLngBounds = Smoke.MockFunction(function(point1, point2){}, 'LatLngBounds');
+      google.maps.LatLngBounds.should_be_invoked().exactly('once');
+      
+      google.maps.event = Smoke.Mock();
+      google.maps.event.should_receive('addListener').at_least('once');
+      
+      mockMarkerManager();
+    });
+    after(function(){
+      $('#map').data('jMapping', null);
+    });
+    it("should function correctly", function(){
+      $('#map').jMapping({
+        side_bar_selector: 'ul#empty-map-side-bar'
+      });
+      expect($('#map').data('jMapping')).to(be_true);
+    });
+  });
+
   describe("jMapping with options", function(){
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('ul#map-item-list li.location .info-html').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 380});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 380
+        });
       });
-      
-      mockGMaps(marker_mock);
+
+      mockGMaps();
       mockMarkerManager();
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000'});
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF'});
-      
+
       $('#map').jMapping({
-        side_bar_selector: 'ul#map-item-list', 
-        location_selector: 'li.location', 
+        side_bar_selector: 'ul#map-item-list',
+        location_selector: 'li.location',
         link_selector: 'a.map-item',
         info_window_selector: '.info-html',
-        info_window_max_width: 380,
-        category_icon_options: {'fun': {primaryColor: '#33FFFF'}, 'default': {primaryColor: '#CC0000'}}
+        info_window_max_width: 380
       });
     });
     after(function(){
@@ -314,8 +348,8 @@ Screw.Unit(function(){
     
     describe("click events for links", function(){
       it("should trigger the GEvent function", function(){
-        GEvent = mock();
-        GEvent.should_receive('trigger').exactly('once');
+        google.maps.event.should_receive('trigger').exactly('once')
+           .with_arguments($('#map').data('jMapping').gmarkers[27], 'click');
         
         $('ul#map-item-list li.location a.map-item#location27').trigger('click');
       });
@@ -325,17 +359,16 @@ Screw.Unit(function(){
   describe("jMapping with an alternate metadata storage", function(){
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('ul#map-list li.location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
       
-      mockGMaps(marker_mock);
+      mockGMaps();
       mockMarkerManager();
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly(0, 'times');
     });
     after(function(){
       $('#map').data('jMapping', null);
@@ -353,32 +386,31 @@ Screw.Unit(function(){
     });
   });
   
-  describe("jMapping with no cateogies and 'category_icon_options'", function(){
+  describe("jMapping with no categories and 'category_icon_options'", function(){
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('ul#map-list li.location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
       
-      mockGMaps(marker_mock);
+      mockGMaps(true);
       mockMarkerManager();
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly(2, 'times');
     });
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
       $('#map').jMapping({
         side_bar_selector: 'ul#map-list', 
         location_selector: 'li.location',
-        category_icon_options: {'fun': {primaryColor: '#33FFFF'}, 'default': {primaryColor: '#CC0000'}},
+        category_icon_options: {'fun': {color: '#33FFFF'}, 'default': {color: '#CC0000'}},
         metadata_options: {type: 'html5'}
       });
       expect($('#map').data('jMapping')).to(be_true);
@@ -389,26 +421,24 @@ Screw.Unit(function(){
     var category_function;
     before(function(){
       // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('#map-side-bar .map-location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
       
-      mockGMaps(marker_mock);
+      mockGMaps(true);
       mockMarkerManager();
-      
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#CC0000'});
-      MapIconMaker.should_receive('createMarkerIcon').exactly('once').with_arguments({primaryColor: '#33FFFF'});
       
       category_function = mock_function(function(category){
         if (category.charAt(0).match(/[a-m]/i)){
-          return {primaryColor: '#CC0000'};
+          return {color: '#CC0000'};
         } else if (category.charAt(0).match(/[n-z]/i)){
-          return {primaryColor: '#33FFFF'};
+          return {color: '#33FFFF'};
         } else {
-          return {primaryColor: '#00FFCC'};
+          return {color: '#00FFCC'};
         }
       }, 'category_icon_options_function');
       category_function.should_be_invoked().exactly('twice');
@@ -416,7 +446,7 @@ Screw.Unit(function(){
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
@@ -427,42 +457,67 @@ Screw.Unit(function(){
     });
   });
   
-  describe("using the map_config option to custom configure the map function", function(){
-    var map_config_function;
+  describe("setting a function to category_icon_options that returns a string", function(){
+    var category_function;
     before(function(){
-      // mock out Marker
-      var marker_mock = mock();
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
       $('#map-side-bar .map-location .info-box').each(function(){
-        marker_mock.should_receive('bindInfoWindowHtml').exactly('once').with_arguments($(this).html(), {maxWidth: 425});
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
       });
       
-      mockGMaps(marker_mock, function(gmap_mock){
-        gmap_mock.should_receive('setMapType').exactly('once').with_arguments(G_HYBRID_MAP);
-        gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GSmallZoomControl());
-        gmap_mock.should_receive('addControl').exactly('once').with_arguments(new GMapTypeControl());
-      });
+      mockGMaps();
       mockMarkerManager();
       
-      // mock out Icon
-      MapIconMaker = mock();
-      MapIconMaker.should_receive('createMarkerIcon').exactly(0, 'times');
-      
-      map_config_function = mock_function(function(map){
-        map.setMapType(G_HYBRID_MAP);
-        map.addControl(new GSmallZoomControl());
-        map.addControl(new GMapTypeControl());
-      }, 'map_config_function');
-      map_config_function.should_be_invoked().exactly('once');
+      category_function = mock_function(function(category){
+        return '/images/map_icons/icon1.jpg';
+      }, 'category_icon_options_function');
+      category_function.should_be_invoked().exactly('twice');
     });
     after(function(){
       $('#map').data('jMapping', null);
       $('#map-side-bar .map-location a.map-link').attr('href', '#');
-      $('#map-side-bar .map-location a.map-link').die('click');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
     });
     
     it("should function correctly", function(){
       $('#map').jMapping({
-        map_config: map_config_function
+        category_icon_options: category_function
+      });
+      expect($('#map').data('jMapping')).to(be_true);
+    });
+  });
+  
+  describe("setting a function to category_icon_options that returns a MarkerImage", function(){
+    var category_function;
+    before(function(){
+      google.maps.InfoWindow = Smoke.MockFunction(function(options){}, 'InfoWindow');
+      $('#map-side-bar .map-location .info-box').each(function(){
+        google.maps.InfoWindow.should_be_invoked().exactly('once').with_arguments({
+          content: $(this).html(),
+          maxWidth: 425
+        });
+      });
+      
+      mockGMaps();
+      mockMarkerManager();
+      
+      category_function = mock_function(function(category){
+        return new google.maps.MarkerImage('/images/map_icons/icon1.jpg');
+      }, 'category_icon_options_function');
+      category_function.should_be_invoked().exactly('twice');
+    });
+    after(function(){
+      $('#map').data('jMapping', null);
+      $('#map-side-bar .map-location a.map-link').attr('href', '#');
+      $('#map-side-bar:first .map-location a.map-link').die('click');
+    });
+    
+    it("should function correctly", function(){
+      $('#map').jMapping({
+        category_icon_options: category_function
       });
       expect($('#map').data('jMapping')).to(be_true);
     });

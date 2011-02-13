@@ -1,3 +1,23 @@
+== 2.1.0 / 2011-01-28
+* Fixed `force_zoom_level` & `default_zoom_level`
+* Add `always_show_markers` option (mokolabs)
+
+== 2.0.0 / 2010-11-24
+* Use version 3 of Google Maps API
+* Add `default_point` setting. (gsterndale)
+* Add `force_zoom_level` setting.
+* Use StyledMarker instead of MapIconMaker as MapIconMaker is incompatible with v3 of the Google Maps API.
+
+== 1.4.0 / 2010-07-11
+
+* Uncache metadata on update.
+* Allow creating many different types of markers based on categories.
+
+== 1.3.0 / 2010-07-11
+
+* Use data-jmapping attribute for metadata by default.
+* add `default_zoom_level` option
+
 == 1.2.1 / 2010-03-12
 
 * Also call `map.checkResize()` when updating the map.
