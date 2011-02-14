@@ -105,7 +105,7 @@ These are options that can be passed to the `jMapping` function to change specif
   * *Default*: `{lat: 0.0, lng: 0.0}`
   * This point determines the Google Maps location if there are no location elements inside the specified `location_selector`.
 * `metadata_options`:
-  * *Default*: `{type: "attr", name: "data"}`
+  * *Default*: `{type: "attr", name: "data-jmapping"}`
   * This is the set of options passed to the jQuery metadata function. It defines how the necessary
     metadata for each location will be searched for.
     See the [metadata plugins docs](http://docs.jquery.com/Plugins/Metadata/metadata#toptions) for more info.
