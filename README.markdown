@@ -54,6 +54,12 @@ Make sure your HTML has a `div` element for the Google map, and there is a conta
           <p>Example Text.</p>
         </div>
       </div>
+      <div class="map-location" data-jmapping="{id: 8, point: {lat: 35.845, lng: -79.139}, category: 'Beer', bounded: false}">
+        <a href="#" class="map-link">A Place outside the bounds of the map</a>
+        <div class="info-box">
+          <p>You might have to pan/zoom to see this location.</p>
+        </div>
+      </div>
     </div>
 
 Then just call the `jMapping` function on the map element:
