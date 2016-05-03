@@ -103,17 +103,23 @@
       
       var getBounds = function(doUpdate){
         var places_data = getPlacesData(doUpdate),
-            newBounds, initialPoint;
-        
-        if (places_data.length){
-          initialPoint = $.jMapping.makeGLatLng(places_data[0].point);
-        }else{
-          initialPoint = $.jMapping.makeGLatLng(settings.default_point);
-        }
-        newBounds = new google.maps.LatLngBounds(initialPoint, initialPoint);
+            newBounds = null, point;
 
-        for (var i=1, len = places_data.length; i<len; i++) {
-          newBounds.extend($.jMapping.makeGLatLng(places_data[i].point));
+        for (var i=0, len = places_data.length; i<len; i++) {
+          // if 'bounded' specified AND it's false, don't add it to the bounds
+          if (places_data[i].bounded != false) {
+            point = $.jMapping.makeGLatLng(places_data[i].point);
+            if (newBounds == null) {
+              newBounds = new google.maps.LatLngBounds(point, point);
+            } else {
+              newBounds.extend(point);
+            }
+          }
+        }
+        // if newBounds not set, just use the default_point from settings
+        if (newBounds == null) {
+          point = $.jMapping.makeGLatLng(settings.default_point);
+          newBounds = new google.maps.LatLngBounds(point, point);
         }
         return newBounds;
       };

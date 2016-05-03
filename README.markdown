@@ -54,6 +54,12 @@ Make sure your HTML has a `div` element for the Google map, and there is a conta
           <p>Example Text.</p>
         </div>
       </div>
+      <div class="map-location" data-jmapping="{id: 8, point: {lat: 35.845, lng: -79.139}, category: 'Beer', bounded: false}">
+        <a href="#" class="map-link">A Place outside the bounds of the map</a>
+        <div class="info-box">
+          <p>You might have to pan/zoom to see this location.</p>
+        </div>
+      </div>
     </div>
 
 Then just call the `jMapping` function on the map element:
@@ -105,7 +111,7 @@ These are options that can be passed to the `jMapping` function to change specif
   * *Default*: `{lat: 0.0, lng: 0.0}`
   * This point determines the Google Maps location if there are no location elements inside the specified `location_selector`.
 * `metadata_options`:
-  * *Default*: `{type: "attr", name: "data"}`
+  * *Default*: `{type: "attr", name: "data-jmapping"}`
   * This is the set of options passed to the jQuery metadata function. It defines how the necessary
     metadata for each location will be searched for.
     See the [metadata plugins docs](http://docs.jquery.com/Plugins/Metadata/metadata#toptions) for more info.
