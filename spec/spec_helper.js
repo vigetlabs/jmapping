@@ -60,7 +60,6 @@ Screw.Specifications.mockGMapsUpdate = function(){
   // mock out GMap2
   var gmap_mock = Smoke.Mock();
   gmap_mock.should_receive('fitBounds').exactly('twice');
-  gmap_mock.should_receive('getZoom').exactly('once').and_return(10);
   $.extend(google.maps.Map.prototype, gmap_mock);
   
   // mock out Bounds
